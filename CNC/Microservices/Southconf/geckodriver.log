@@ -1,0 +1,109 @@
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+/root/snap/firefox/3290/Escritorio was removed, reassigning DESKTOP to homedir
+/root/snap/firefox/3290/Descargas was removed, reassigning DOWNLOAD to homedir
+/root/snap/firefox/3290/Plantillas was removed, reassigning TEMPLATES to homedir
+/root/snap/firefox/3290/Público was removed, reassigning PUBLICSHARE to homedir
+/root/snap/firefox/3290/Documentos was removed, reassigning DOCUMENTS to homedir
+/root/snap/firefox/3290/Música was removed, reassigning MUSIC to homedir
+/root/snap/firefox/3290/Imágenes was removed, reassigning PICTURES to homedir
+/root/snap/firefox/3290/Vídeos was removed, reassigning VIDEOS to homedir
+1701689436146	geckodriver	INFO	Listening on 127.0.0.1:60637
+1701689436322	mozrunner::runner	INFO	Running command: "/snap/firefox/current/firefox.launcher" "--marionette" "--remote-debugging-port" "46893" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileag1FOI"
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701690304411	geckodriver	INFO	Listening on 127.0.0.1:36989
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701690304727	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "33335" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofiledwQG2l"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701692818331	geckodriver	INFO	Listening on 127.0.0.1:34147
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701692819131	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "56193" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileoV3lUW"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701692837724	geckodriver	INFO	Listening on 127.0.0.1:59975
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701692838531	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "47709" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileMzWEI3"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701692865976	geckodriver	INFO	Listening on 127.0.0.1:44499
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701692866769	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "55161" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileGzIMaB"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701692943491	geckodriver	INFO	Listening on 127.0.0.1:35373
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701692944297	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "42487" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileWUUB9X"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701697713681	geckodriver	INFO	Listening on 127.0.0.1:40129
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701697714458	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "55375" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilex5a1WY"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701697754009	geckodriver	INFO	Listening on 127.0.0.1:47431
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701697754817	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "52877" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile0LLl9E"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701697951233	geckodriver	INFO	Listening on 127.0.0.1:59567
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701697952005	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "52977" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileUD4580"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701698623633	geckodriver	INFO	Listening on 127.0.0.1:44483
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701698624472	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "36801" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileLGmEwx"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701698807519	geckodriver	INFO	Listening on 127.0.0.1:40177
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701698807814	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "34861" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileT6tzOA"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701699751526	geckodriver	INFO	Listening on 127.0.0.1:53285
+
+Command '/usr/bin/firefox' requires the firefox snap to be installed.
+Please install it with:
+
+snap install firefox
+
+1701699751530	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "50167" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofiles6VbTq"
+
+Command '/usr/bin/firefox' requires the firefox snap to be installed.
+Please install it with:
+
+snap install firefox
+
+1701699856740	geckodriver	INFO	Listening on 127.0.0.1:38433
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701699857204	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "34493" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileMrgR7l"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701700376337	geckodriver	INFO	Listening on 127.0.0.1:60303
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701700376762	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "34727" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileLrCQtW"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701700414928	geckodriver	INFO	Listening on 127.0.0.1:50571
+1701700415230	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "34469" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile6itWDT"
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0
+1701762673101	geckodriver	INFO	Listening on 127.0.0.1:56721
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+1701762673899	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "44329" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileEZWE1y"
+mkdir: cannot create directory ‘/run/user/0’: Permission denied
+Authorization required, but no authorization protocol specified
+Error: cannot open display: :0

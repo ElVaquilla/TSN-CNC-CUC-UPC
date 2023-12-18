@@ -17,7 +17,7 @@ docker-compose exec random_generator-microservice bash -c 'python __init__.py'
 docker-compose exec preprocessing-microservice bash -c 'python __init__.py'
 docker-compose exec ilp bash -c 'source /root/miniconda3/bin/activate base && python __init__.py'
 sleep 4
-docker-compose down
+#docker-compose down
 
 # Make sure that the code is working for the random generated parameters,
 # You will see it at the end of the workflow in an output that says Feasibility: True

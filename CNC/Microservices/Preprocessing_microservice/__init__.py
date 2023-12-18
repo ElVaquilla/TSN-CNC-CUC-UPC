@@ -106,11 +106,38 @@ if __name__ == "__main__":
          Topology = json.load(topology_json_file)
       with open('/var/jetconf.txt') as jetconf_json_file:
          Stream_information = json.load(jetconf_json_file)   
-      # Djikstra scheduler
+      
+      #Stream_Source_Destination preprocessing (associating IP to ID)
+      identificator = Topology["identificator"]
+      Stream_Source_Destination = Stream_information["Stream_Source_Destination"]
+      id = 0
+      ipIdrelation = []
+      for i in identificator:
+         ipIdrelationInd = []
+         ipIdrelationInd.append(id)
+         id += 1
+         ipIdrelationInd.append(identificator[i])
+         print(ipIdrelationInd)
+         ipIdrelation.append(ipIdrelationInd)
+         z = 0
+         q = 0
+      for i in Stream_Source_Destination:
+         for x in i:
+            for y in ipIdrelation:
+               if (y[1] == x):
+                  Stream_Source_Destination[z][q] = int(y[0])
+            q += 1
+            #print(str(x)+" has ID: "+ str(y[q]))
+         z +=1
+         q=0
 
+      print(Stream_Source_Destination)
+      
+      
+      # Djikstra scheduler
       network = Network_Topology(Topology["Adjacency_Matrix"]) # Using the Network Topology class
       all_paths_matrix = all_paths_matrix_generator(Topology["Network_nodes"], network)
-      Streams_paths = Streams_paths_generator(all_paths_matrix, Topology["Stream_Source_Destination"])
+      Streams_paths = Streams_paths_generator(all_paths_matrix, Stream_Source_Destination) 
       Streams_links_paths = Streams_links_paths_generator(Streams_paths)
       Link_order_Descriptor = Link_order_Descriptor_generator(Streams_links_paths, Topology["Network_links"])
 
@@ -124,7 +151,7 @@ if __name__ == "__main__":
       Preprocessed_data = {}
 
       Preprocessed_data["Number_of_Streams"] = Stream_information["Number_of_Streams"]
-      Preprocessed_data["Stream_Source_Destination"] = Topology["Stream_Source_Destination"]
+      Preprocessed_data["Stream_Source_Destination"] = Stream_Source_Destination #Makes no sense to receive this parameter in the topology json
       Preprocessed_data["identificator"] = Topology["identificator"]
       Preprocessed_data["interface_Matrix"] = Topology["interface_Matrix"]
       Preprocessed_data["Network_links"] = Topology["Network_links"]
@@ -136,8 +163,8 @@ if __name__ == "__main__":
       Preprocessed_data["Max_frames" ] = Stream_information["Max_frames"]
       Preprocessed_data["Streams_size"] = Stream_information["Streams_size"]
       Preprocessed_data["Num_of_Frames"] = Stream_information["Num_of_Frames"]
-      Preprocessed_data["Destinations"] = Stream_information["Destinations"]
-      Preprocessed_data["Sources"] = Stream_information["Sources"]
+      Preprocessed_data["Destinations"] = Topology["Destinations"]
+      Preprocessed_data["Sources"] = Topology["Sources"]
       Preprocessed_data["Model_Descriptor"] = Model_Descriptor
       Preprocessed_data["Model_Descriptor_vector"] = Model_Descriptor_vector
       Preprocessed_data["Deathline_Stream"] = Stream_information["Deathline_Stream"]

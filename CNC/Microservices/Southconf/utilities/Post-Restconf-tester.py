@@ -3,10 +3,10 @@ import json
 from pprint import pprint
 
 device = {
-   "ip": "192.168.0.41",
+   "ip": "172.19.0.2",
    "username": "admin",
    "password": "admin",
-   "port": "8182",
+   "port": "8181",
 }
 
 headers = {
@@ -17,7 +17,6 @@ headers = {
 module = "ietf-interfaces:interfaces"
 
 url = f"http://{device['ip']}:{device['port']}/restconf/config/network-topology:network-topology/topology/topology-netconf/node/netopeer/yang-ext:mount/{module}"
-
 payload = {
    "interface": [
     {

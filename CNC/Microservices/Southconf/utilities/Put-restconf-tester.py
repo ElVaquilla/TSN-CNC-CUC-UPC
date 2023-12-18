@@ -3,7 +3,7 @@ import json
 from pprint import pprint
 
 device = {
-   "ip": "172.17.0.2",
+   "ip": "172.19.0.2",
    "username": "admin",
    "password": "admin",
    "port": "8181",
@@ -19,6 +19,26 @@ module = "ietf-interfaces:interfaces"
 
 # Remember to add the name of the interface when you discover what is the issue with the put method
 url = f"http://{device['ip']}:{device['port']}/restconf/config/network-topology:network-topology/topology/topology-netconf/node/TSN-switch2/yang-ext:mount/{module}/interface/PORT_0"
+url2 = f"http://{device['ip']}:{device['port']}/restconf/config/network-topology:network-topology/topology/topology-netconf"
+
+payload2 = {
+    "node": [
+        {
+            "node-id": "TSN_SWITCH_0",
+            "netconf-node-topology:port": "830",
+            "netconf-node-topology:reconnect-on-changed-schema": "false",
+            "netconf-node-topology:connection-timeout-millis": "20000",
+            "netconf-node-topology:tcp-only": "false",
+            "netconf-node-topology:max-connection-attempts": "0",
+            "netconf-node-topology:username": "soc-e",
+            "netconf-node-topology:password": "soc-e",
+            "netconf-node-topology:sleep-factor": "1.5",
+            "netconf-node-topology:host": "192.168.2.64",
+            "netconf-node-topology:between-attempts-timeout-millis": "2000",
+            "netconf-node-topology:keepalive-delay": "120"
+        }
+    ]
+}
 
 payload = {
     "interface": [
@@ -45,7 +65,8 @@ payload = {
     ]
 }
 requests.packages.urllib3.disable_warnings()
-response = requests.put(url, headers=headers, json=payload, auth=(device['username'], device['password']), verify=False)
+response = requests.post(url2, headers=headers, json=payload2, auth=(device['username'], device['password']), verify=False)
+#response2 = requests.put(url2, headers=headers, json=payload2, auth=(device['username'], device['password']), verify=False)
 print(response)
 if (response.status_code == 204):
    print("Successfully updated interface")

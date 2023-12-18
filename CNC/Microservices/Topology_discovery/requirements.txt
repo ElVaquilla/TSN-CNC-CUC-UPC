@@ -1,0 +1,3 @@
+six
+paramiko==2.8.0
+pika==1.2.0

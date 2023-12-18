@@ -6,6 +6,17 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+
+  topology_discovery:
+    build:
+      context: .
+      dockerfile: Topology_discovery/Dockerfile
+    volumes:
+      - ./Topology_discovery:/topology
+    stdin_open: true
+    tty: true
+    depends_on:
+      - rabbitmq-microservice
   
   preprocessing-microservice:
     build:
@@ -48,10 +59,19 @@ services:
       - ./Jetconf:/Jetconf
     stdin_open: true 
     tty: true
-    depends_on: 
-      - rabbitmq-microservice
     ports:
       - 8443:8443
+      - 80:80
+      - 8080:8080
+      - "10001-10020:10001-10020"
+      - 443:443
+    #network_mode: host
+    depends_on: 
+      - rabbitmq-microservice
+   # network_mode: bridge
+   # extra_hosts:
+    #  - "host.docker.internal:host-gateway"
+   # network_mode: "host"
   
   southconf:
     build:
@@ -74,3 +94,13 @@ services:
       - 8101:8101
       - 8181:8181
   
+  vlan_configurator:
+    build:
+      context: .
+      dockerfile: Vlan_configurator/Dockerfile
+    volumes:
+      - ./Vlan_configurator:/vlan_configurator
+    stdin_open: true
+    tty: true
+    depends_on:
+      - rabbitmq-microservice

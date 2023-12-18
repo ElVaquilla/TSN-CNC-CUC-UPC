@@ -22,7 +22,7 @@ def Frames_per_Stream_generator(Streams_size):
 
 
 # Opening JSON file
-with open('state_data.json') as json_file:
+with open('jetconf_processing/state_data.json') as json_file:
     data = json.load(json_file)
 
 streams_id_list = [stream_id["stream-id"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
@@ -56,6 +56,15 @@ max_frames = max(Frames_per_stream)
 interval_denominator = [stream_id["request"]["talker"]["traffic-specification"]["interval"]["denominator"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
 interval_numerator = [stream_id["request"]["talker"]["traffic-specification"]["interval"]["numerator"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
 
+#Stream sources and destinations
+ 
+sources = [stream_id["request"]["talker"]["end-station-interfaces"][0]["ip"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
+#sources = [stream_id["stream-id"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
+destinations= [stream_id["request"]["listeners-list"][0]["end-station-interfaces"][0]["ip"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
+#vlan-ids
+vlan_ids = [stream_id["request"]["talker"]["traffic-specification"]["vlan-id"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
+
+
 #getting the Frames_per_stream
 
 per_stream_period= {}
@@ -64,6 +73,15 @@ for i in range(len(interval_denominator)) :
     Streams_Period_list.append(int(interval_numerator[i]/interval_denominator[i]))
     per_stream_period[i] = int(interval_numerator[i]/interval_denominator[i]) # this goes in nanoseconds
 Streams_Period = { str(key) : value for key, value in per_stream_period.items() }
+
+#getting Stream_Source_Destination
+Stream_Source_Destination = []
+Stream_Source_Destination_individual = []
+for i in range(len(destinations)):
+    Stream_Source_Destination_individual = []
+    Stream_Source_Destination_individual.append(sources[i])
+    Stream_Source_Destination_individual.append(destinations[i])
+    Stream_Source_Destination.append(Stream_Source_Destination_individual)
 
 # Generating the hyperperiod
 Hyperperiod = Hyperperiod_generator(Streams_Period_list)
@@ -74,12 +92,13 @@ Frames_per_Stream, Max_frames, Num_of_Frames = Frames_per_Stream_generator(Strea
 # Defining the json_payload 
 
 jetconf_payload = {}
-
+jetconf_payload["vlan_ids"] = vlan_ids
 jetconf_payload["Streams_size"] = Streams_size
 jetconf_payload["Streams_Period"] = Streams_Period
 jetconf_payload["Streams_Period_list"] = Streams_Period_list
 jetconf_payload["Deathline_Stream"] = Deathline_Stream
 jetconf_payload["Number_of_Streams"] = Number_of_Streams
+jetconf_payload["Stream_Source_Destination"] = Stream_Source_Destination
 jetconf_payload["Hyperperiod"] = Hyperperiod
 jetconf_payload["Frames_per_Stream"] = Frames_per_Stream
 jetconf_payload["Max_frames"] = Max_frames

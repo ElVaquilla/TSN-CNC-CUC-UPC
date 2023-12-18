@@ -86,6 +86,18 @@ if __name__ == "__main__":
        plot_network = Generate_network_graphic(Sources, Destinations)
        df = gantt_chart_generator(Result_offsets, Repetitions, Streams_Period)
        information_generator(Num_of_Frames, Streams_Period, Link_order_Descriptor, Network_links, Streams_links_paths)
+       
+       ilp = {}
+       ilp["Clean_offsets"] = Clean_offsets_collector
+       ilp["Repetitions_Descriptor"] = Repetitions_Descriptor
+       ilp["Streams_Period"] = Streams_Period
+       ilp["Hyperperiod"] = Hyperperiod
+       ilp["identificator"] = identificator
+       print (ilp)
+
+       json_ilp_payload = json.dumps(ilp, indent = 4)
+       send_message(json_ilp_payload, 'ilp-south')
+
 
     else:
         print("There is not input data, check the previous microserrvices or the RabbitMQ logs")

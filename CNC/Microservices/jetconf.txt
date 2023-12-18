@@ -1,0 +1,41 @@
+{
+    "Streams_size": [
+        256,
+        53,
+        53
+    ],
+    "Streams_Period": {
+        "0": 2500,
+        "1": 5000,
+        "2": 5000
+    },
+    "Streams_Period_list": [
+        2500,
+        5000,
+        5000
+    ],
+    "Deathline_Stream": {
+        "0": 10000,
+        "1": 5000,
+        "2": 5000
+    },
+    "Number_of_Streams": 3,
+    "Hyperperiod": 5000,
+    "Frames_per_Stream": [
+        [
+            1
+        ],
+        [
+            1
+        ],
+        [
+            1
+        ]
+    ],
+    "Max_frames": 1,
+    "Num_of_Frames": [
+        1,
+        1,
+        1
+    ]
+}

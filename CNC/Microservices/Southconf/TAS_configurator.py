@@ -80,6 +80,9 @@ def gates_states_values_generator(grouped_offsets, priority_mapping):
     final_sorted_offsets= {} 
     for link in new_gates_states_be.keys():
         final_sorted_offsets[link] = {x: new_gates_states_be[link][x] for x in sorted(new_gates_states_be[link])}
+
+    print ("-----------FINAL SORTED OFFSETS-------------")
+    print (final_sorted_offsets)
     return final_sorted_offsets
 
 
@@ -143,7 +146,9 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
                     "admin-cycle-time-extension": "0"
                 }
             }
-        } 
+        }
+        print("----------------------------PAYLOAD----------------------------")
+        print(per_link_payload) 
     return per_link_payload
 
 # hyperperiod= 32_000 # Hyperperiod is in microseconds

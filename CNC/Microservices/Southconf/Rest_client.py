@@ -52,6 +52,8 @@ def REST_DEVICE_creation(IP_address, device_name):
         ]
     }
     url = f"http://{device['ip']}:{device['port']}/restconf/config/network-topology:network-topology/topology/topology-netconf" 
+    #url2 = f"http://172.19.0.2:8181/restconf/config/network-topology:network-topology/topology/topology-netconf/node/new-netconf-device"
+    #http://172.19.0.2:8181/restconf/config/network-topology:network-topology/topology/topology-netconf
     requests.packages.urllib3.disable_warnings()
     response = requests.post(url, headers=headers, data=json.dumps(payload), auth=(device['username'], device['password']), verify=False)    
     return response

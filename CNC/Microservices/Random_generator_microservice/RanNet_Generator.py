@@ -61,6 +61,7 @@ def Random_Network_Generator(Number_of_edges, Connection_probability) :
         Network_nodes =  list(g.nodes)
         Network_links = list(g.edges)
         Sources = [link[0] for link in Network_links]
+        print("--------NETWORK LINKS: "+str(Network_links))
         Destinations = [link[1] for link in Network_links]
 
         # Checks if the random values are suitable for the Adjacency Matrix

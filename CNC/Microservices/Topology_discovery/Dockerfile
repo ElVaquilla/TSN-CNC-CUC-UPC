@@ -5,3 +5,4 @@ COPY /Topology_discovery/requirements.txt /topology/requirements.txt
 #RUN pip install six
 #RUN pip install paramiko==2.8.0
 RUN pip install -r requirements.txt
+#ENTRYPOINT ["__init__.py"]

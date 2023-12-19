@@ -33,6 +33,7 @@ for mgmtIp in addresses:
             nodeList.append(nodeTSN) #Adds node to node list
             i += 1
             print("The node's data plane IP address is "+nodeTSN.ip)
+            print("The node's id is "+str(nodeTSN.id))
     ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('sudo lldpcli show neighbors -f json')
     time.sleep(1)
     data = ssh_stdout.readlines()
@@ -65,7 +66,7 @@ for file in os.listdir("./devices"):
         try:
             neighbor = jsondata['lldp']['interface']['PORT.1']['chassis']['SOCE_MTSN_KIT']['mgmt-ip']
             neighborId = findIdbyIp(nodeList, neighbor)
-            print("Neighbor found. Node with id: "+neighbor)
+            print("Neighbor found. Node with id: "+str(neighborId))
             for tsndevice in nodeList:
                 if (tsndevice.confIp == device):
                     intfNeighbor = ['PORT.1', neighborId]
@@ -75,7 +76,7 @@ for file in os.listdir("./devices"):
         try:
             neighbor = jsondata['lldp']['interface']['PORT.2']['chassis']['SOCE_MTSN_KIT']['mgmt-ip']
             neighborId = findIdbyIp(nodeList, neighbor)
-            print("Neighbor found. Node with id: "+neighbor)
+            print("Neighbor found. Node with id: "+str(neighborId))
             for tsndevice in nodeList:
                 if (tsndevice.confIp == device):
                     intfNeighbor = ['PORT.2', neighborId]
@@ -84,6 +85,7 @@ for file in os.listdir("./devices"):
             print("Port 2 from "+device+ " does not have any neighbor")
         try:
             neighbor = jsondata['lldp']['interface']['PORT.3']['chassis']['SOCE_MTSN_KIT']['mgmt-ip']
+            print("The neighbor found has ip address: "+str(neighbor))
             neighborId = findIdbyIp(nodeList, neighbor)
             print("Neighbor found. Node with id: "+str(neighborId))
             for tsndevice in nodeList:

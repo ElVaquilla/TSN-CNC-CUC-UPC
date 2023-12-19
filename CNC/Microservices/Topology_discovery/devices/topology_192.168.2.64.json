@@ -10,7 +10,7 @@
 
         "rid": "1",
 
-        "age": "7 days, 00:55:33",
+        "age": "0 day, 01:43:42",
 
         "chassis": {
 
@@ -26,9 +26,9 @@
 
             "descr": "SOCE_MTSN_KIT 20.1.0",
 
-            "mgmt-ip": "192.168.5.65",
+            "mgmt-ip": "192.168.2.65",
 
-            "mgmt-iface": "3",
+            "mgmt-iface": "4",
 
             "capability": {
 

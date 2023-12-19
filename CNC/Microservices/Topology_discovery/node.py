@@ -11,7 +11,7 @@ class node:
         
 def findIdbyIp (nodeList, ip):
     for nodetsn in nodeList:
-        if (str(nodetsn.ip).rstrip('\n')==str(ip)):
+        if ((str(nodetsn.ip).rstrip('\n')==str(ip)) or (str(nodetsn.confIp).rstrip('\n')==str(ip))):
             return nodetsn.id
         
 

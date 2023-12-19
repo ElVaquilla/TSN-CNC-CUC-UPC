@@ -8,7 +8,7 @@ RUN python3 -m pip uninstall jetconf_jukebox -y
 RUN rm /home/jukebox-jetconf/jetconf_jukebox/*.py
 COPY Jetconf/*.py /home/jukebox-jetconf/jetconf_jukebox/
 RUN python3 -m pip install /home/jukebox-jetconf/.
-
+#ENTRYPOINT ["configuration_deployer.sh"]
 #RUN jetconf -c /home/jetconf/data/example-config.yaml
 #COPY Jetconf/requirements.txt Jetconf/requirements.txt
 #RUN pip install -r Jetconf/requirements.txt 

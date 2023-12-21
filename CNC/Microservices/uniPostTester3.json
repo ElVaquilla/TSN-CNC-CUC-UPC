@@ -1,6 +1,6 @@
 {
     "ieee802-dot1q-tsn-types-upc-version:stream-list":{
-          "stream-id": "12-5A-99-aC-BF-b4:bC-26",
+          "stream-id": "12-5A-99-aC-BF-b4:bC-28",
       "request": {
             "talker": {
 
@@ -22,11 +22,11 @@
                 ],
                 "traffic-specification": {
                     "interval": {
-                        "numerator": 10000,
+                        "numerator": 5000,
                         "denominator": 1
                     },
                     "max-frames-per-interval": 10,
-                    "max-frame-size": 256,
+                    "max-frame-size": 512,
                     "transmission-selection": 0,
                     "time-aware": {
                         "earliest-transmit-offset": 10,

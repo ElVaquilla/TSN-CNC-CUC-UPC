@@ -2,73 +2,165 @@
 
   "lldp": {
 
-    "interface": {
+    "interface": [
 
-      "PORT.3": {
+      {
 
-        "via": "LLDP",
+        "PORT.2": {
 
-        "rid": "1",
+          "via": "LLDP",
 
-        "age": "0 day, 01:43:42",
+          "rid": "6",
 
-        "chassis": {
+          "age": "1 day, 02:14:49",
 
-          "SOCE_MTSN_KIT": {
+          "chassis": {
+
+            "marc-ALDA": {
+
+              "id": {
+
+                "type": "mac",
+
+                "value": "d8:5e:d3:77:dd:21"
+
+              },
+
+              "descr": "Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 14 14:59:49 UTC 2023 x86_64",
+
+              "mgmt-ip": "192.168.4.66",
+
+              "mgmt-iface": "2",
+
+              "capability": [
+
+                {
+
+                  "type": "Bridge",
+
+                  "enabled": false
+
+                },
+
+                {
+
+                  "type": "Router",
+
+                  "enabled": false
+
+                },
+
+                {
+
+                  "type": "Wlan",
+
+                  "enabled": false
+
+                },
+
+                {
+
+                  "type": "Station",
+
+                  "enabled": true
+
+                }
+
+              ]
+
+            }
+
+          },
+
+          "port": {
 
             "id": {
 
               "type": "mac",
 
-              "value": "da:04:ac:7f:ae:8b"
+              "value": "d8:5e:d3:77:dd:21"
 
             },
 
-            "descr": "SOCE_MTSN_KIT 20.1.0",
+            "descr": "eno1",
 
-            "mgmt-ip": "192.168.2.65",
-
-            "mgmt-iface": "4",
-
-            "capability": {
-
-              "type": "Bridge",
-
-              "enabled": true
-
-            }
+            "ttl": "120"
 
           }
 
-        },
+        }
 
-        "port": {
+      },
 
-          "id": {
+      {
 
-            "type": "mac",
+        "PORT.3": {
 
-            "value": "70:f8:e7:d0:08:a3"
+          "via": "LLDP",
+
+          "rid": "1",
+
+          "age": "2 days, 03:06:30",
+
+          "chassis": {
+
+            "SOCE_MTSN_KIT": {
+
+              "id": {
+
+                "type": "mac",
+
+                "value": "da:04:ac:7f:ae:8b"
+
+              },
+
+              "descr": "SOCE_MTSN_KIT 20.1.0",
+
+              "mgmt-ip": "192.168.2.65",
+
+              "mgmt-iface": "4",
+
+              "capability": {
+
+                "type": "Bridge",
+
+                "enabled": true
+
+              }
+
+            }
 
           },
 
-          "descr": "PORT_0",
+          "port": {
 
-          "ttl": "120"
+            "id": {
 
-        },
+              "type": "mac",
 
-        "unknown-tlvs": {
+              "value": "70:f8:e7:d0:08:a3"
 
-          "unknown-tlv": {
+            },
 
-            "oui": "00,12,0F",
+            "descr": "PORT_0",
 
-            "subtype": "7",
+            "ttl": "120"
 
-            "len": "2",
+          },
 
-            "value": "00,0B"
+          "unknown-tlvs": {
+
+            "unknown-tlv": {
+
+              "oui": "00,12,0F",
+
+              "subtype": "7",
+
+              "len": "2",
+
+              "value": "00,0B"
+
+            }
 
           }
 
@@ -76,7 +168,7 @@
 
       }
 
-    }
+    ]
 
   }
 

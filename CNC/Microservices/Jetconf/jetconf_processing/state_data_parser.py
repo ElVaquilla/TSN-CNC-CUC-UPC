@@ -62,7 +62,7 @@ sources = [stream_id["request"]["talker"]["end-station-interfaces"][0]["ip"] for
 #sources = [stream_id["stream-id"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
 destinations= [stream_id["request"]["listeners-list"][0]["end-station-interfaces"][0]["ip"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
 #vlan-ids
-vlan_ids = [stream_id["request"]["talker"]["traffic-specification"]["vlan-id"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
+#vlan_ids = [stream_id["request"]["talker"]["traffic-specification"]["vlan-id"] for stream_id in data["ieee802-dot1q-tsn-types-upc-version:tsn-uni"]["stream-list"]]
 
 
 #getting the Frames_per_stream
@@ -92,7 +92,7 @@ Frames_per_Stream, Max_frames, Num_of_Frames = Frames_per_Stream_generator(Strea
 # Defining the json_payload 
 
 jetconf_payload = {}
-jetconf_payload["vlan_ids"] = vlan_ids
+#jetconf_payload["vlan_ids"] = vlan_ids
 jetconf_payload["Streams_size"] = Streams_size
 jetconf_payload["Streams_Period"] = Streams_Period
 jetconf_payload["Streams_Period_list"] = Streams_Period_list

@@ -1,6 +1,6 @@
 {
     "ieee802-dot1q-tsn-types-upc-version:stream-list":{
-          "stream-id": "12-5A-99-aC-BF-b4:bC-26",
+          "stream-id": "12-5A-99-aC-BF-b4:bC-27",
       "request": {
             "talker": {
 
@@ -12,7 +12,7 @@
                     {
                         "mac-address": "12-5A-99-aC-BF-b7",
                         "interface-name": "eth0",
-                        "ip": "192.168.2.64"
+                        "ip": "192.168.2.65"
                     }
                 ],
                 "data-frame-specification": [
@@ -22,7 +22,7 @@
                 ],
                 "traffic-specification": {
                     "interval": {
-                        "numerator": 10000,
+                        "numerator": 5000,
                         "denominator": 1
                     },
                     "max-frames-per-interval": 10,
@@ -54,7 +54,7 @@
                     {
                         "mac-address": "60-F2-62-74-45-F4",
                         "interface-name": "eth1",
-                        "ip":"192.168.2.65"
+                        "ip":"192.168.2.64"
                     }
                 ],
 

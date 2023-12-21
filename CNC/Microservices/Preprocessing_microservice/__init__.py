@@ -132,53 +132,57 @@ if __name__ == "__main__":
          q=0
 
       print(Stream_Source_Destination)
+      print("TOPOLOGY NETWORK NODES -----------------------")
+      print(Topology["Network_nodes"])
+      print("ADJACENCY MATRIX ---------------")
+      print(Topology["Adjacency_Matrix"])
       
-      
-      # Djikstra scheduler
-      network = Network_Topology(Topology["Adjacency_Matrix"]) # Using the Network Topology class
-      all_paths_matrix = all_paths_matrix_generator(Topology["Network_nodes"], network)
-      Streams_paths = Streams_paths_generator(all_paths_matrix, Stream_Source_Destination) 
-      Streams_links_paths = Streams_links_paths_generator(Streams_paths)
-      Link_order_Descriptor = Link_order_Descriptor_generator(Streams_links_paths, Topology["Network_links"])
+   
+   # Djikstra scheduler
+   network = Network_Topology(Topology["Adjacency_Matrix"]) # Using the Network Topology class
+   all_paths_matrix = all_paths_matrix_generator(Topology["Network_nodes"], network)
+   Streams_paths = Streams_paths_generator(all_paths_matrix, Stream_Source_Destination) 
+   Streams_links_paths = Streams_links_paths_generator(Streams_paths)
+   Link_order_Descriptor = Link_order_Descriptor_generator(Streams_links_paths, Topology["Network_links"])
 
-      # Preprocessing
-      Links_per_Stream = Links_per_Stream_generator(Topology["Network_links"], Link_order_Descriptor)
-      Model_Descriptor, Model_Descriptor_vector, Streams = Model_Descriptor_generator(Stream_information["Number_of_Streams"], Stream_information["Max_frames"], Topology["Network_links"], Stream_information["Frames_per_Stream"], Links_per_Stream)
-      Frame_Duration = Frame_Duration_Generator(Stream_information["Number_of_Streams"], Stream_information["Max_frames"], Topology["Network_links"] )
-      Repetitions, Repetitions_Matrix, Repetitions_Descriptor, max_repetitions= Repetitions_generator(Stream_information["Streams_Period"], Streams, Stream_information["Hyperperiod"])
-      unused_links = unused_links_generator(Topology["Network_links"], Link_order_Descriptor)
+   # Preprocessing
+   Links_per_Stream = Links_per_Stream_generator(Topology["Network_links"], Link_order_Descriptor)
+   Model_Descriptor, Model_Descriptor_vector, Streams = Model_Descriptor_generator(Stream_information["Number_of_Streams"], Stream_information["Max_frames"], Topology["Network_links"], Stream_information["Frames_per_Stream"], Links_per_Stream)
+   Frame_Duration = Frame_Duration_Generator(Stream_information["Number_of_Streams"], Stream_information["Max_frames"], Topology["Network_links"] )
+   Repetitions, Repetitions_Matrix, Repetitions_Descriptor, max_repetitions= Repetitions_generator(Stream_information["Streams_Period"], Streams, Stream_information["Hyperperiod"])
+   unused_links = unused_links_generator(Topology["Network_links"], Link_order_Descriptor)
 
-      Preprocessed_data = {}
+   Preprocessed_data = {}
 
-      Preprocessed_data["Number_of_Streams"] = Stream_information["Number_of_Streams"]
-      Preprocessed_data["Stream_Source_Destination"] = Stream_Source_Destination #Makes no sense to receive this parameter in the topology json
-      Preprocessed_data["identificator"] = Topology["identificator"]
-      Preprocessed_data["interface_Matrix"] = Topology["interface_Matrix"]
-      Preprocessed_data["Network_links"] = Topology["Network_links"]
-      Preprocessed_data["Adjacency_Matrix"] = Topology["Adjacency_Matrix"]
-      Preprocessed_data["Link_order_Descriptor"] = Link_order_Descriptor
-      Preprocessed_data["Streams_Period"] = Stream_information["Streams_Period"]
-      Preprocessed_data["Hyperperiod"] = Stream_information["Hyperperiod"]
-      Preprocessed_data["Frames_per_Stream"] = Stream_information["Frames_per_Stream"]
-      Preprocessed_data["Max_frames" ] = Stream_information["Max_frames"]
-      Preprocessed_data["Streams_size"] = Stream_information["Streams_size"]
-      Preprocessed_data["Num_of_Frames"] = Stream_information["Num_of_Frames"]
-      Preprocessed_data["Destinations"] = Topology["Destinations"]
-      Preprocessed_data["Sources"] = Topology["Sources"]
-      Preprocessed_data["Model_Descriptor"] = Model_Descriptor
-      Preprocessed_data["Model_Descriptor_vector"] = Model_Descriptor_vector
-      Preprocessed_data["Deathline_Stream"] = Stream_information["Deathline_Stream"]
-      Preprocessed_data["Repetitions"] = Repetitions
-      Preprocessed_data["Streams_links_paths"] = Streams_links_paths
-      Preprocessed_data["Repetitions_Descriptor"] = Repetitions_Descriptor
-      Preprocessed_data["Frame_Duration"] = Frame_Duration
-      Preprocessed_data["unused_links"] =unused_links
-      Preprocessed_data["Links_per_Stream"] = Links_per_Stream
+   Preprocessed_data["Number_of_Streams"] = Stream_information["Number_of_Streams"]
+   Preprocessed_data["Stream_Source_Destination"] = Stream_Source_Destination #Makes no sense to receive this parameter in the topology json
+   Preprocessed_data["identificator"] = Topology["identificator"]
+   Preprocessed_data["interface_Matrix"] = Topology["interface_Matrix"]
+   Preprocessed_data["Network_links"] = Topology["Network_links"]
+   Preprocessed_data["Adjacency_Matrix"] = Topology["Adjacency_Matrix"]
+   Preprocessed_data["Link_order_Descriptor"] = Link_order_Descriptor
+   Preprocessed_data["Streams_Period"] = Stream_information["Streams_Period"]
+   Preprocessed_data["Hyperperiod"] = Stream_information["Hyperperiod"]
+   Preprocessed_data["Frames_per_Stream"] = Stream_information["Frames_per_Stream"]
+   Preprocessed_data["Max_frames" ] = Stream_information["Max_frames"]
+   Preprocessed_data["Streams_size"] = Stream_information["Streams_size"]
+   Preprocessed_data["Num_of_Frames"] = Stream_information["Num_of_Frames"]
+   Preprocessed_data["Destinations"] = Topology["Destinations"]
+   Preprocessed_data["Sources"] = Topology["Sources"]
+   Preprocessed_data["Model_Descriptor"] = Model_Descriptor
+   Preprocessed_data["Model_Descriptor_vector"] = Model_Descriptor_vector
+   Preprocessed_data["Deathline_Stream"] = Stream_information["Deathline_Stream"]
+   Preprocessed_data["Repetitions"] = Repetitions
+   Preprocessed_data["Streams_links_paths"] = Streams_links_paths
+   Preprocessed_data["Repetitions_Descriptor"] = Repetitions_Descriptor
+   Preprocessed_data["Frame_Duration"] = Frame_Duration
+   Preprocessed_data["unused_links"] =unused_links
+   Preprocessed_data["Links_per_Stream"] = Links_per_Stream
 
-      print(Preprocessed_data)
-      json_Preprocessed_data = json.dumps(Preprocessed_data, indent = 4) 
-      print("working")
-      # Sending the messages to the RabbitMQ server
-      send_message(json_Preprocessed_data, 'pre-ilp')
-   else:
-      print("There is not input data, check the previous microservices or the RabbitMQ logs")
+   print(Preprocessed_data)
+   json_Preprocessed_data = json.dumps(Preprocessed_data, indent = 4) 
+   print("working")
+   # Sending the messages to the RabbitMQ server
+   send_message(json_Preprocessed_data, 'pre-ilp')
+else:
+   print("There is not input data, check the previous microservices or the RabbitMQ logs")

@@ -69,6 +69,7 @@ import json
 from Vlans_configurator import *
 from TAS_configurator import *
 from Rest_client import *
+import time
 if __name__ == "__main__":
     raw_scheduler_data = os.path.exists('/var/ilp.txt')
     if(raw_scheduler_data):
@@ -94,7 +95,7 @@ if __name__ == "__main__":
         Hyperperiod =  ilp_data["Hyperperiod"]
         priority_mapping= {'0': '0', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '7'}
         identificator = ilp_data["identificator"]
-
+        print(Clean_offsets)
         #interface_Matrix = ilp_data["interface_Matrix"]
         per_link_payload = payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,priority_mapping, Hyperperiod)
         
@@ -102,7 +103,8 @@ if __name__ == "__main__":
         for index, device in identificator.items() :
             request = REST_DEVICE_creation(device, "TSN_SWITCH_" + str(index))
             print(request)
-        request= REST_Device_configuration (per_link_payload[" 0"], "TSN_SWITCH_0")
+        time.sleep(2)
+        request= REST_Device_configuration (per_link_payload[" 0"], "TSN_SWITCH_0") #El indice de per_link_payload hace referencia al ID del link al que pertenece la interficie que se configura
         request= REST_Device_configuration (per_link_payload[" 0"], "TSN_SWITCH_1")
         print(json.dumps(per_link_payload[" 0"]))
         print(f"this is the other request {request}")

@@ -2,73 +2,165 @@
 
   "lldp": {
 
-    "interface": {
+    "interface": [
 
-      "PORT.0": {
+      {
 
-        "via": "LLDP",
+        "PORT.0": {
 
-        "rid": "1",
+          "via": "LLDP",
 
-        "age": "7 days, 23:01:38",
+          "rid": "1",
 
-        "chassis": {
+          "age": "10 days, 00:24:44",
 
-          "SOCE_MTSN_KIT": {
+          "chassis": {
+
+            "SOCE_MTSN_KIT": {
+
+              "id": {
+
+                "type": "mac",
+
+                "value": "c6:13:5d:83:54:a8"
+
+              },
+
+              "descr": "SOCE_MTSN_KIT 20.1.0",
+
+              "mgmt-ip": "192.168.4.64",
+
+              "mgmt-iface": "3",
+
+              "capability": {
+
+                "type": "Bridge",
+
+                "enabled": true
+
+              }
+
+            }
+
+          },
+
+          "port": {
 
             "id": {
 
               "type": "mac",
 
-              "value": "c6:13:5d:83:54:a8"
+              "value": "70:f8:e7:d0:08:a0"
 
             },
 
-            "descr": "SOCE_MTSN_KIT 20.1.0",
+            "descr": "PORT_3",
 
-            "mgmt-ip": "192.168.4.64",
+            "ttl": "120"
 
-            "mgmt-iface": "3",
+          },
 
-            "capability": {
+          "unknown-tlvs": {
 
-              "type": "Bridge",
+            "unknown-tlv": {
 
-              "enabled": true
+              "oui": "00,12,0F",
+
+              "subtype": "7",
+
+              "len": "2",
+
+              "value": "00,0B"
 
             }
 
           }
 
-        },
+        }
 
-        "port": {
+      },
 
-          "id": {
+      {
 
-            "type": "mac",
+        "PORT.1": {
 
-            "value": "70:f8:e7:d0:08:a0"
+          "via": "LLDP",
+
+          "rid": "3",
+
+          "age": "0 day, 04:16:56",
+
+          "chassis": {
+
+            "marc-HP": {
+
+              "id": {
+
+                "type": "mac",
+
+                "value": "a8:93:4a:03:15:45"
+
+              },
+
+              "descr": "Ubuntu 23.04 Linux 6.2.0-39-generic #40-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 14 14:18:00 UTC 2023 x86_64",
+
+              "mgmt-ip": "172.17.0.1",
+
+              "mgmt-iface": "3",
+
+              "capability": [
+
+                {
+
+                  "type": "Bridge",
+
+                  "enabled": true
+
+                },
+
+                {
+
+                  "type": "Router",
+
+                  "enabled": true
+
+                },
+
+                {
+
+                  "type": "Wlan",
+
+                  "enabled": true
+
+                },
+
+                {
+
+                  "type": "Station",
+
+                  "enabled": false
+
+                }
+
+              ]
+
+            }
 
           },
 
-          "descr": "PORT_3",
+          "port": {
 
-          "ttl": "120"
+            "id": {
 
-        },
+              "type": "mac",
 
-        "unknown-tlvs": {
+              "value": "00:23:57:5c:36:91"
 
-          "unknown-tlv": {
+            },
 
-            "oui": "00,12,0F",
+            "descr": "enx0023575c3691",
 
-            "subtype": "7",
-
-            "len": "2",
-
-            "value": "00,0B"
+            "ttl": "120"
 
           }
 
@@ -76,7 +168,7 @@
 
       }
 
-    }
+    ]
 
   }
 

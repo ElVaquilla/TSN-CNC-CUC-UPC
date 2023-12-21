@@ -15,6 +15,8 @@ class Network_Topology():
     # A constructor to iniltialize the values
     def __init__(self, graph):
         nodes = len(graph)
+        print("NODES ----------------")
+        print(nodes)
         #distance array initialization
         self.distArray = [0 for i in range(nodes)]
         #visited nodes initialization

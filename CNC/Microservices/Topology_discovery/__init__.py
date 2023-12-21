@@ -51,6 +51,28 @@ for file in os.listdir("./devices"):
         #print("The device id is "+str(nodeList[1].id))
         f = open("./devices/"+file)
         jsondata = json.load(f)
+        jsonstring = json.dumps(jsondata)
+        print(find_values('mgmt-ip',jsonstring))
+
+        try:
+            neighbors = find_values('mgmt-ip',jsonstring) #neighbors of each node
+            for tsndevice in nodeList:
+                if (tsndevice.confIp == device):
+                    for neighbor in neighbors:
+                        neighborId = findIdbyIp(nodeList, neighbor)
+                        if neighborId is None:  #You just found an end device
+                            print("End device found with IP address: "+ str(neighbor) +". ID assigned: "+str(i))
+                            endDevice = node(i,neighbor, 0,[] )
+                            endDevice.neighbors.append(tsndevice.id)
+                            tsndevice.neighbors.append(i)
+                            nodeList.append(endDevice)
+                            i += 1
+                        else:
+                            tsndevice.neighbors.append(neighborId)  
+                              
+        except:
+            print(device+ " does not have any neighbor")
+'''
         try:
             neighbor = jsondata['lldp']['interface']['PORT.0']['chassis']['SOCE_MTSN_KIT']['mgmt-ip']
             neighborId = findIdbyIp(nodeList, neighbor)
@@ -63,6 +85,7 @@ for file in os.listdir("./devices"):
 
         except:
             print("Port 0 from "+device+ " does not have any neighbor")
+
         try:
             neighbor = jsondata['lldp']['interface']['PORT.1']['chassis']['SOCE_MTSN_KIT']['mgmt-ip']
             neighborId = findIdbyIp(nodeList, neighbor)
@@ -95,6 +118,7 @@ for file in os.listdir("./devices"):
         except:
             print("Port 3 from "+device+ " does not have any neighbor")
 
+'''
 #retrieving network_nodes, network_links, adjacency_matrix
 
 Topology = {}
@@ -111,10 +135,10 @@ for tsndevice in nodeList:
     networkNodes.append(tsndevice.id)
 
     #create list with network links
-    for tuple in tsndevice.interfacesAndNeighbors:
+    for element in tsndevice.neighbors:
         link = []
         link.append(tsndevice.id)
-        neighborId = tuple[1]
+        neighborId = element
         link.append(neighborId)
         inverseLink = [link[1], link[0]]
         if (networkLinks.count(inverseLink) == 0):
@@ -131,8 +155,8 @@ for tsndevice in nodeList:
     for nodes in nodeList:
         nodeLinks.append(0)
 
-    for tuple in tsndevice.interfacesAndNeighbors:
-        nodeLinks[tuple[1]]=1
+    for neighbor in tsndevice.neighbors:
+        nodeLinks[neighbor]=1
 
     adjacencyMatrix.append(nodeLinks)
 
@@ -145,7 +169,7 @@ Topology["identificator"] = identificator
 Topology["interface_Matrix"] = interfaceMatrix
 Topology["Sources"] = sources
 Topology["Destinations"] = destinations
-
+print(Topology)
 json_Topology = json.dumps(Topology, indent = 4)
 
 

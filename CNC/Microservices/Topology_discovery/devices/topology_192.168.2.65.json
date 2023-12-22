@@ -12,7 +12,7 @@
 
           "rid": "1",
 
-          "age": "10 days, 00:24:44",
+          "age": "10 days, 19:58:21",
 
           "chassis": {
 
@@ -86,9 +86,9 @@
 
           "via": "LLDP",
 
-          "rid": "3",
+          "rid": "4",
 
-          "age": "0 day, 04:16:56",
+          "age": "0 day, 00:03:39",
 
           "chassis": {
 
@@ -104,9 +104,9 @@
 
               "descr": "Ubuntu 23.04 Linux 6.2.0-39-generic #40-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 14 14:18:00 UTC 2023 x86_64",
 
-              "mgmt-ip": "172.17.0.1",
+              "mgmt-ip": "10.192.72.232",
 
-              "mgmt-iface": "3",
+              "mgmt-iface": "2",
 
               "capability": [
 

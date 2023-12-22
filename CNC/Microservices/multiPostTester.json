@@ -2,7 +2,7 @@
         "ieee802-dot1q-tsn-types-upc-version:stream-list":[
             
             {
-            "index":3, 
+                "index":2, 
           "stream-id": "12-5A-99-aC-BF-b4:bC-26",
       "request": {
             "talker": {

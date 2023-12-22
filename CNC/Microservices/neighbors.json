@@ -1,0 +1,43 @@
+{
+  "lldp": {
+    "interface": {
+      "enx0023575c3691": {
+        "via": "LLDP",
+        "rid": "1",
+        "age": "0 day, 01:20:14",
+        "chassis": {
+          "SOCE_MTSN_KIT": {
+            "id": {
+              "type": "mac",
+              "value": "da:04:ac:7f:ae:8b"
+            },
+            "descr": "SOCE_MTSN_KIT 20.1.0",
+            "mgmt-ip": "192.168.2.65",
+            "mgmt-iface": "4",
+            "capability": {
+              "type": "Bridge",
+              "enabled": true
+            }
+          }
+        },
+        "port": {
+          "id": {
+            "type": "mac",
+            "value": "70:f8:e7:d0:08:a3"
+          },
+          "descr": "PORT_1",
+          "ttl": "120"
+        },
+        "unknown-tlvs": {
+          "unknown-tlv": {
+            "oui": "00,12,0F",
+            "subtype": "7",
+            "len": "2",
+            "value": "00,09"
+          }
+        }
+      }
+    }
+  }
+}
+

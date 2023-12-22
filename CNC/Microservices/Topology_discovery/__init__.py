@@ -11,6 +11,23 @@ try:
     os.mkdir('devices')
 except:
     print("already_created")
+'''
+os.system('lldpcli show neighbors -f json > nodes.json')
+n = open("nodes.json")
+jsonNodes = json.load(n)
+jsonStringNodes = json.dumps(jsonNodes)
+networkNodes = find_values('mgmt-ip',jsonStringNodes)
+
+with open('sw_addresses.conf', 'a') as t:
+    t.truncate(0)
+    for networkNode in networkNodes:
+        t.write(str(networkNode) + '\n')
+'''
+os.system('ip --json address show > ip.json')
+ifconfig = open('ip.json')
+jsonIfconfig = json.load(ifconfig)
+jsonStringIfconfig = json.dumps(jsonIfconfig)
+myIps = find_values('local', jsonStringIfconfig) #Finds my IPs to not be added as a neighbor when receiving the report from switches
 
 with open('sw_addresses.conf', 'r') as address_file:
     addresses=address_file.read().split('\n')
@@ -60,7 +77,10 @@ for file in os.listdir("./devices"):
                 if (tsndevice.confIp == device):
                     for neighbor in neighbors:
                         neighborId = findIdbyIp(nodeList, neighbor)
-                        if neighborId is None:  #You just found an end device
+                        if neighborId is None:  #You just found an end device or CNC
+                            if neighbor in myIps: #CNC is being reported as neighbor
+                                next(neighbors, None)
+                                continue
                             print("End device found with IP address: "+ str(neighbor) +". ID assigned: "+str(i))
                             endDevice = node(i,neighbor, 0,[] )
                             endDevice.neighbors.append(tsndevice.id)

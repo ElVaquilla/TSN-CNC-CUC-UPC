@@ -58,7 +58,7 @@ def REST_DEVICE_creation(IP_address, device_name):
     response = requests.post(url, headers=headers, data=json.dumps(payload), auth=(device['username'], device['password']), verify=False)    
     return response
 
-def REST_Device_configuration (payload, device_name):
+def REST_Device_configuration (payload, device_name, device_interface):
     device = {
         "ip": "opendaylight",
         "username": "admin",
@@ -70,7 +70,7 @@ def REST_Device_configuration (payload, device_name):
         "Content-Type" : "application/json",
     }
     module = "ietf-interfaces:interfaces"
-    url = f"http://{device['ip']}:{device['port']}/restconf/config/network-topology:network-topology/topology/topology-netconf/node/{device_name}/yang-ext:mount/{module}/interface/PORT_0"
+    url = f"http://{device['ip']}:{device['port']}/restconf/config/network-topology:network-topology/topology/topology-netconf/node/{device_name}/yang-ext:mount/{module}/interface/"+device_interface
     requests.packages.urllib3.disable_warnings()
     print("_________________This is the url_________________", url)
     # Sending the message

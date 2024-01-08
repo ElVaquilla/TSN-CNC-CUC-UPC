@@ -95,18 +95,86 @@ if __name__ == "__main__":
         Hyperperiod =  ilp_data["Hyperperiod"]
         priority_mapping= {'0': '0', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '7'}
         identificator = ilp_data["identificator"]
+        linksInterfaces = ilp_data["linksInterfaces"]
+        networkLinks =ilp_data['Network_links']
+        unusedLinks = ilp_data['unused_links']
+
+        print("LINKS INTERFACES ------")
+        print(linksInterfaces)
+        print("CLEAN OFFSETS ---------")
         print(Clean_offsets)
+        print("REPETITIONS DESCRIPTOR -----")
+        print(Repetitions_Descriptor)
+        print("STREAMS PERIOD --------")
+        print(Streams_Period)
+        print("HYPERPERIOD -----------")
+        print(Hyperperiod)
+        print("IDENTIFICATOR ---------")
+        print(identificator)
+        print("NETWORK LINKS ---------")
+        print(networkLinks)
+        print("UNUSED LINKS --------")
+        print(unusedLinks)
         #interface_Matrix = ilp_data["interface_Matrix"]
-        per_link_payload = payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,priority_mapping, Hyperperiod)
-        
+        countSwitches = 0
+        totalLinks = []
+        switchesIDs = []
         # device_list should be created
         for index, device in identificator.items() :
-            request = REST_DEVICE_creation(device, "TSN_SWITCH_" + str(index))
-            print(request)
+            if device.startswith('192.168.2.'):
+                 request = REST_DEVICE_creation(device, "TSN_SWITCH_" + str(countSwitches))
+                 print(request)
+                 switchName = "TSN_SWITCH_"+str(countSwitches)
+                 switchesIDs.append([device,switchName])
+                 countSwitches += 1
         time.sleep(2)
-        request= REST_Device_configuration (per_link_payload[" 0"], "TSN_SWITCH_0") #El indice de per_link_payload hace referencia al ID del link al que pertenece la interficie que se configura
-        request= REST_Device_configuration (per_link_payload[" 0"], "TSN_SWITCH_1")
-        print(json.dumps(per_link_payload[" 0"]))
+        print("SWITCHES IDs -------")
+        print(switchesIDs)
+            
+        configurableLinks = []
+        for key in linksInterfaces.keys():
+             totalLinks.append(int(key))
+             if int(key) not in unusedLinks:
+                  configurableLinks.append(int(key))
+
+        print("TOTAL LINKS ---------")
+        print(totalLinks)
+        print ("CONFIGURABLE LINKS ---------")
+        print(configurableLinks)
+        for key in configurableLinks: #A partir del linkID, conseguir el nombre de los switch y las interficies que forman parte del link
+            linkID = int(key)
+            print("LINK ID-----")
+            print(linkID)
+            link = networkLinks[linkID] #link para el cual se ha generado una configuración
+            switchIP = 0
+            switchInterfaces = []
+            print(link)
+            for index,interfaces in linksInterfaces.items():
+                 if int(index) == linkID:
+                      print(interfaces)
+                      switchInterfaces = interfaces
+            #print(interfaces)
+            for switchID in link: #Para cada switch en el link, encontrar su nombre (ej: TSN_SWITCH_0) a partir de su ID
+                for index, ip in identificator.items(): 
+                     if int(index) == int(switchID):
+                          switchIP = ip #Encontrar su IP primero
+                          for element in switchesIDs:
+                               if switchIP in element: #Encontrar nombre del switch mediante la IP
+                                    switchConfName = element[1]
+                                    interface = switchInterfaces[int(link.index(switchID))]
+                                    per_link_payload = payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,priority_mapping, Hyperperiod, interface)
+                                    request= REST_Device_configuration (per_link_payload[" "+str(key)], switchConfName, interface) #El indice de per_link_payload hace referencia al ID del link al que pertenece la interficie que se configura
+                                    print(switchConfName)
+                                    print(interface)
+                                    print("Link "+str(key))
+                                    
+                                    
+
+            
+        
+        
+        #request= REST_Device_configuration (per_link_payload[" 0"], "TSN_SWITCH_1")
+        #print(json.dumps(per_link_payload[" 0"]))
         print(f"this is the other request {request}")
         print(identificator)
     else:

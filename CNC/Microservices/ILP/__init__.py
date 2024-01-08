@@ -93,6 +93,9 @@ if __name__ == "__main__":
        ilp["Streams_Period"] = Streams_Period
        ilp["Hyperperiod"] = Hyperperiod
        ilp["identificator"] = identificator
+       ilp["linksInterfaces"] = Preprocessed_data["linksInterfaces"]
+       ilp["Network_links"] = Preprocessed_data['Network_links']
+       ilp["unused_links"] = Preprocessed_data['unused_links']
        print (ilp)
 
        json_ilp_payload = json.dumps(ilp, indent = 4)

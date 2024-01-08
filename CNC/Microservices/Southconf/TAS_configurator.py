@@ -30,7 +30,7 @@ def full_scheduler_generator(grouped_offsets, Repetitions_Descriptor, Streams_Pe
                 if " " + str(stream_index) in grouped_offsets[link].keys():
                     if repetition != 0:
                         repetition_offsets = [x+ Streams_Period[str(stream_index)]*repetition for x in grouped_offsets[link][" " + str(stream_index)]]
-                        print("looking for this shit", grouped_offsets[link][" " + str(stream_index)])
+                        print("looking for this", grouped_offsets[link][" " + str(stream_index)])
                         print("and its type", type(grouped_offsets[link][" " + str(stream_index)]))
                         print(f"link index {link}  stream_index  {stream_index}")
                         for new_offset in repetition_offsets:
@@ -59,7 +59,9 @@ def gates_states_values_generator(grouped_offsets, priority_mapping):
             for repetition in grouped_offsets[link][stream]:
                 offsets_organizer[repetition] = stream
         offsets_organizer= {x:offsets_organizer[x] for x in sorted(offsets_organizer)}
+
         gates_states[link] = offsets_organizer
+
     
     #Change stream identificator for priority in binary
     new_gates_states = copy.deepcopy(gates_states)
@@ -89,7 +91,7 @@ def gates_states_values_generator(grouped_offsets, priority_mapping):
 '''
 Generates the payload defined in the 802.1 qcc schedule
 '''
-def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,priority_mapping, hyperperiod):
+def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,priority_mapping, hyperperiod, interface):
 
     grouped_offsets=gates_parameter_generator(Clean_offsets)
     grouped_offsets=full_scheduler_generator(grouped_offsets, Repetitions_Descriptor, Streams_Period)
@@ -127,7 +129,7 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
         per_link_payload[link] = {
             "interface": 
             {
-                "name": to_define,
+                "name": interface,
                 "type" : "iana-if-type:ethernetCsmacd",
                 "ieee802-dot1q-sched:gate-parameters": {
                     "admin-gate-states": "255",

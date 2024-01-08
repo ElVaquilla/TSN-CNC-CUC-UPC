@@ -136,22 +136,35 @@ if __name__ == "__main__":
       print(Topology["Network_nodes"])
       print("ADJACENCY MATRIX ---------------")
       print(Topology["Adjacency_Matrix"])
-      
    
+   #Topolog = {}
+   #Topolog["Adjacency_Matrix"] = [[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]]
+   #Topolog["Network_nodes"] = [0,1,2,3]
+   #Stream_information = {}
+   #Stream_information["Stream_Source_Destination"] = [[3, 2], [2, 0], [3, 2]]
+   #tream_Source_Destination = Stream_information["Stream_Source_Destination"]
    # Djikstra scheduler
    network = Network_Topology(Topology["Adjacency_Matrix"]) # Using the Network Topology class
    all_paths_matrix = all_paths_matrix_generator(Topology["Network_nodes"], network)
+   print ("ALL PATHS MATRIX ----------")
+   print(all_paths_matrix)
    Streams_paths = Streams_paths_generator(all_paths_matrix, Stream_Source_Destination) 
+   print ("STREAM PATHS ---------")
+   print(Streams_paths)
    Streams_links_paths = Streams_links_paths_generator(Streams_paths)
+   print("STREAMS LINKS PATHS ---------")
+   print(Streams_links_paths)
    Link_order_Descriptor = Link_order_Descriptor_generator(Streams_links_paths, Topology["Network_links"])
-
+   print("LINK ORDER DESCRIPTOR--------------")
+   print(Link_order_Descriptor)
    # Preprocessing
    Links_per_Stream = Links_per_Stream_generator(Topology["Network_links"], Link_order_Descriptor)
    Model_Descriptor, Model_Descriptor_vector, Streams = Model_Descriptor_generator(Stream_information["Number_of_Streams"], Stream_information["Max_frames"], Topology["Network_links"], Stream_information["Frames_per_Stream"], Links_per_Stream)
    Frame_Duration = Frame_Duration_Generator(Stream_information["Number_of_Streams"], Stream_information["Max_frames"], Topology["Network_links"] )
    Repetitions, Repetitions_Matrix, Repetitions_Descriptor, max_repetitions= Repetitions_generator(Stream_information["Streams_Period"], Streams, Stream_information["Hyperperiod"])
    unused_links = unused_links_generator(Topology["Network_links"], Link_order_Descriptor)
-
+   print("UNUSED LINKS -----------------")
+   print(unused_links)
    Preprocessed_data = {}
 
    Preprocessed_data["Number_of_Streams"] = Stream_information["Number_of_Streams"]
@@ -178,6 +191,7 @@ if __name__ == "__main__":
    Preprocessed_data["Frame_Duration"] = Frame_Duration
    Preprocessed_data["unused_links"] =unused_links
    Preprocessed_data["Links_per_Stream"] = Links_per_Stream
+   Preprocessed_data["linksInterfaces"] = Topology["linksInterfaces"]
 
    print(Preprocessed_data)
    json_Preprocessed_data = json.dumps(Preprocessed_data, indent = 4) 

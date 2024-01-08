@@ -19,4 +19,8 @@ ifconfig = open('ip.json')
 jsonIfconfig = json.load(ifconfig)
 jsonStringIfconfig = json.dumps(jsonIfconfig)
 myIps = find_values('local', jsonStringIfconfig)
+with open('Topology_discovery/myIps.txt', 'a') as f:
+    f.truncate(0)
+    for ip in myIps:
+        f.write(str(ip)+'\n')
 print(myIps)

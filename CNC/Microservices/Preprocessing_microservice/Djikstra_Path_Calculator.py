@@ -108,15 +108,17 @@ def all_paths_matrix_generator(Network_nodes, network) :
 # Determining the path for each Stream generating a list of of all the nodes from source to destination
 def Streams_paths_generator(all_paths_matrix, Stream_Source_Destination) :
     Streams_paths = [0 for i in range(len(Stream_Source_Destination))]
+    
     n = 0
     for stream in Stream_Source_Destination:
         
         if len(all_paths_matrix[stream[1]][stream[0]]) == 1 : 
-            Streams_paths[n]=all_paths_matrix[stream[1]][stream[0]]
+            Streams_paths[n]=all_paths_matrix[stream[1]][stream[0]].copy()
             if stream[1] != all_paths_matrix[stream[1]][stream[0]][0] : 
                 Streams_paths[n].append(stream[1])
         else :
-            Streams_paths[n]=all_paths_matrix[stream[1]][stream[0]]
+            Streams_paths[n]=all_paths_matrix[stream[1]][stream[0]].copy()
+            Streams_paths[n].append(stream[1])
         Streams_paths[n].insert(0,stream[0])
         if Streams_paths[n][0] == Streams_paths[n][1]:
             del Streams_paths[n][0]

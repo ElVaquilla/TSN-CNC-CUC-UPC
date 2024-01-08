@@ -10,9 +10,9 @@
 
           "via": "LLDP",
 
-          "rid": "6",
+          "rid": "1",
 
-          "age": "1 day, 21:48:19",
+          "age": "0 day, 03:19:34",
 
           "chassis": {
 
@@ -28,7 +28,7 @@
 
               "descr": "Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 14 14:59:49 UTC 2023 x86_64",
 
-              "mgmt-ip": "192.168.4.66",
+              "mgmt-ip": "192.168.4.68",
 
               "mgmt-iface": "2",
 
@@ -98,9 +98,9 @@
 
           "via": "LLDP",
 
-          "rid": "1",
+          "rid": "2",
 
-          "age": "2 days, 22:40:00",
+          "age": "0 day, 03:11:51",
 
           "chassis": {
 
@@ -110,7 +110,7 @@
 
                 "type": "mac",
 
-                "value": "da:04:ac:7f:ae:8b"
+                "value": "fa:44:f8:8c:43:e3"
 
               },
 

@@ -1,12 +1,13 @@
 import paramiko, time
 from Rabbitmq_queues import *
 from node import *
-import os
+import os,sys
 import json
 
 txt_files = []
 nodeList = []
 i = 0
+j = 0
 try:
     os.mkdir('devices')
 except:
@@ -23,12 +24,10 @@ with open('sw_addresses.conf', 'a') as t:
     for networkNode in networkNodes:
         t.write(str(networkNode) + '\n')
 '''
-os.system('ip --json address show > ip.json')
-ifconfig = open('ip.json')
-jsonIfconfig = json.load(ifconfig)
-jsonStringIfconfig = json.dumps(jsonIfconfig)
-myIps = find_values('local', jsonStringIfconfig) #Finds my IPs to not be added as a neighbor when receiving the report from switches
-
+with open('myIps.txt', 'r') as myIps:
+    myIps=myIps.read().split('\n') 
+   
+print('The host IP addresses are '+str(myIps))
 with open('sw_addresses.conf', 'r') as address_file:
     addresses=address_file.read().split('\n')
     print(addresses, type(addresses))
@@ -47,17 +46,21 @@ for mgmtIp in addresses:
         for line in data:
             f.write(str(line) + '\n')
             nodeTSN.ip = line
-            nodeList.append(nodeTSN) #Adds node to node list
-            i += 1
-            print("The node's data plane IP address is "+nodeTSN.ip)
-            print("The node's id is "+str(nodeTSN.id))
+        #if i == 0:
+            #nodeTSN.ip = "192.168.4.64"
+        #elif i == 1:
+            #nodeTSN.ip = "192.168.4.65"
+        nodeList.append(nodeTSN) #Adds node to node list
+        i += 1
+        print("The node's data plane IP address is "+str(nodeTSN.ip))
+        print("The node's id is "+str(nodeTSN.id))
     ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('sudo lldpcli show neighbors -f json')
     time.sleep(1)
     data = ssh_stdout.readlines()
     with open('devices/topology_'+ mgmtIp + '.json', 'a') as f:
         f.truncate(0)
         for line in data:
-            f.write(str(line) + '\n')
+           f.write(str(line) + '\n')
 
 # Parse the created json files to find neighbors
 
@@ -68,30 +71,62 @@ for file in os.listdir("./devices"):
         #print("The device id is "+str(nodeList[1].id))
         f = open("./devices/"+file)
         jsondata = json.load(f)
+        
         jsonstring = json.dumps(jsondata)
         print(find_values('mgmt-ip',jsonstring))
 
         try:
-            neighbors = find_values('mgmt-ip',jsonstring) #neighbors of each node
+            neighbors = find_values('mgmt-ip',jsonstring) #neighbors of given node
+            print ("FOUND NEIGHBORS ------------------------")
+            print (neighbors)
+            neighborPorts = find_values('port', jsonstring) #Ports belonging to neighbors of the given node
+            jsonPortNames = json.dumps(neighborPorts)
+            portNames = find_values('descr', jsonPortNames) #name of the neighbors' interface (port) directly connected to the given node
+            print("FOUND NEIGHBOR INTERFACES ----------------------")
+            print(portNames)
+            myInterfaces = []
+            interfaces = find_values('interface', jsonstring)
+
+            for t in range(len(interfaces[0])):
+               # myInterfaces.append(interfaces)
+                myInterface = jsondata["lldp"]["interface"][t].keys()
+                for key in myInterface:
+                    if key.startswith('PORT.'):
+                        modKey = key.replace('.','_')
+                    myInterfaces.append(modKey)
+            print("SELF INTERFACES ----- ")
+            print(myInterfaces)
+           # interfacesData = json.dumps(interfaces)
+            print(interfaces)
             for tsndevice in nodeList:
+                j = 0
                 if (tsndevice.confIp == device):
                     for neighbor in neighbors:
                         neighborId = findIdbyIp(nodeList, neighbor)
                         if neighborId is None:  #You just found an end device or CNC
-                            if neighbor in myIps: #CNC is being reported as neighbor
-                                next(neighbors, None)
-                                continue
+                            #if neighbor in myIps: #CNC is being reported as neighbor
+                                #next(neighbors, None)
+                                #continue
                             print("End device found with IP address: "+ str(neighbor) +". ID assigned: "+str(i))
                             endDevice = node(i,neighbor, 0,[] )
-                            endDevice.neighbors.append(tsndevice.id)
-                            tsndevice.neighbors.append(i)
+                            endDevice.neighbors.append([tsndevice.id,myInterfaces[j],portNames[j]]) #neighbors structure : [neighbor ID, neighbor Interface, self interface]
+                            tsndevice.neighbors.append([i,portNames[j], myInterfaces[j]])
                             nodeList.append(endDevice)
+                            j += 1
                             i += 1
                         else:
-                            tsndevice.neighbors.append(neighborId)  
+                            tsndevice.neighbors.append([neighborId,portNames[j],myInterfaces[j]]) 
+                            j += 1
+
                               
-        except:
-            print(device+ " does not have any neighbor")
+        except Exception as e: 
+                print(e)
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                print(exc_type, fname, exc_tb.tb_lineno)
+            
+            #print(device+ " does not have any neighbor")
+
 '''
         try:
             neighbor = jsondata['lldp']['interface']['PORT.0']['chassis']['SOCE_MTSN_KIT']['mgmt-ip']
@@ -139,6 +174,14 @@ for file in os.listdir("./devices"):
             print("Port 3 from "+device+ " does not have any neighbor")
 
 '''
+y = 0
+for nodes in nodeList:
+    y = 0
+    print ("node with ID = "+str(nodes.id))
+    for neighbor in nodes.neighbors:
+        print("neighbor with ID: "+ str(nodes.neighbors[y][0]) + " and interface: "+str(nodes.neighbors[y][1]))
+        y += 1
+
 #retrieving network_nodes, network_links, adjacency_matrix
 
 Topology = {}
@@ -147,22 +190,33 @@ networkLinks = []
 adjacencyMatrix = []
 identificator = {}
 interfaceMatrix = []
+linksInterfaces = {}
 
 countNodes = len(nodeList)
+x=0
 for tsndevice in nodeList:
 
     #create list with network nodes
     networkNodes.append(tsndevice.id)
-
+    
     #create list with network links
     for element in tsndevice.neighbors:
+
         link = []
         link.append(tsndevice.id)
-        neighborId = element
+        neighborId = element [0]
         link.append(neighborId)
         inverseLink = [link[1], link[0]]
         if (networkLinks.count(inverseLink) == 0):
             networkLinks.append(link)
+            linkInterf = []
+            linkInterf.append(element [2])
+            linkInterf.append(element [1])
+            linksInterfaces [x] = linkInterf
+            x+=1
+
+    
+    
 
 #Build link sources and destinations
 sources = [link[0] for link in networkLinks]
@@ -176,7 +230,7 @@ for tsndevice in nodeList:
         nodeLinks.append(0)
 
     for neighbor in tsndevice.neighbors:
-        nodeLinks[neighbor]=1
+        nodeLinks[neighbor [0]]=1
 
     adjacencyMatrix.append(nodeLinks)
 
@@ -189,6 +243,7 @@ Topology["identificator"] = identificator
 Topology["interface_Matrix"] = interfaceMatrix
 Topology["Sources"] = sources
 Topology["Destinations"] = destinations
+Topology["linksInterfaces"] = linksInterfaces
 print(Topology)
 json_Topology = json.dumps(Topology, indent = 4)
 

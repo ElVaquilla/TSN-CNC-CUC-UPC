@@ -5,7 +5,7 @@ class node:
         self.id = id
         self.confIp = confIp
         self.ip = ip
-        self.neighbors = neighbors
+        self.neighbors = neighbors #neighbors structure : [neighbor ID, neighbor Interface, self interface]
     
     def getNeighbors (self):
         return self.neighbors

@@ -85,7 +85,9 @@ services:
       - rabbitmq-microservice
 
   opendaylight:
-    image: gabrielorozco20/odl_tsn:latest
+    build:
+      context: .
+      dockerfile: Opendaylight/Dockerfile
     restart: always 
     stdin_open: true 
     tty: true

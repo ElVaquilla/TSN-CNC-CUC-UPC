@@ -86,14 +86,20 @@ for file in os.listdir("./devices"):
             print(portNames)
             myInterfaces = []
             interfaces = find_values('interface', jsonstring)
-
-            for t in range(len(interfaces[0])):
-               # myInterfaces.append(interfaces)
-                myInterface = jsondata["lldp"]["interface"][t].keys()
+            if (len(interfaces[0]) == 1):
+                myInterface = jsondata["lldp"]["interface"].keys()
                 for key in myInterface:
                     if key.startswith('PORT.'):
                         modKey = key.replace('.','_')
                     myInterfaces.append(modKey)
+            else:
+                for t in range(len(interfaces[0])):
+                # myInterfaces.append(interfaces)
+                    myInterface = jsondata["lldp"]["interface"][t].keys()
+                    for key in myInterface:
+                        if key.startswith('PORT.'):
+                            modKey = key.replace('.','_')
+                        myInterfaces.append(modKey)
             print("SELF INTERFACES ----- ")
             print(myInterfaces)
            # interfacesData = json.dumps(interfaces)

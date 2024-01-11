@@ -2,165 +2,73 @@
 
   "lldp": {
 
-    "interface": [
+    "interface": {
 
-      {
+      "PORT.0": {
 
-        "PORT.0": {
+        "via": "LLDP",
 
-          "via": "LLDP",
+        "rid": "5",
 
-          "rid": "5",
+        "age": "3 days, 03:16:24",
 
-          "age": "0 day, 03:11:55",
+        "chassis": {
 
-          "chassis": {
-
-            "SOCE_MTSN_KIT": {
-
-              "id": {
-
-                "type": "mac",
-
-                "value": "ee:f1:ac:59:68:89"
-
-              },
-
-              "descr": "SOCE_MTSN_KIT 20.1.0",
-
-              "mgmt-ip": "192.168.4.64",
-
-              "mgmt-iface": "3",
-
-              "capability": {
-
-                "type": "Bridge",
-
-                "enabled": true
-
-              }
-
-            }
-
-          },
-
-          "port": {
+          "SOCE_MTSN_KIT": {
 
             "id": {
 
               "type": "mac",
 
-              "value": "70:f8:e7:d0:08:a0"
+              "value": "ee:f1:ac:59:68:89"
 
             },
 
-            "descr": "PORT_3",
+            "descr": "SOCE_MTSN_KIT 20.1.0",
 
-            "ttl": "120"
+            "mgmt-ip": "192.168.4.64",
 
-          },
+            "mgmt-iface": "3",
 
-          "unknown-tlvs": {
+            "capability": {
 
-            "unknown-tlv": {
+              "type": "Bridge",
 
-              "oui": "00,12,0F",
-
-              "subtype": "7",
-
-              "len": "2",
-
-              "value": "00,0B"
+              "enabled": true
 
             }
 
           }
 
-        }
+        },
 
-      },
+        "port": {
 
-      {
+          "id": {
 
-        "PORT.1": {
+            "type": "mac",
 
-          "via": "LLDP",
-
-          "rid": "6",
-
-          "age": "0 day, 00:42:33",
-
-          "chassis": {
-
-            "marc-HP": {
-
-              "id": {
-
-                "type": "mac",
-
-                "value": "a8:93:4a:03:15:45"
-
-              },
-
-              "descr": "Ubuntu 23.04 Linux 6.2.0-39-generic #40-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 14 14:18:00 UTC 2023 x86_64",
-
-              "mgmt-ip": "172.17.0.1",
-
-              "mgmt-iface": "3",
-
-              "capability": [
-
-                {
-
-                  "type": "Bridge",
-
-                  "enabled": true
-
-                },
-
-                {
-
-                  "type": "Router",
-
-                  "enabled": true
-
-                },
-
-                {
-
-                  "type": "Wlan",
-
-                  "enabled": true
-
-                },
-
-                {
-
-                  "type": "Station",
-
-                  "enabled": false
-
-                }
-
-              ]
-
-            }
+            "value": "70:f8:e7:d0:08:a0"
 
           },
 
-          "port": {
+          "descr": "PORT_3",
 
-            "id": {
+          "ttl": "120"
 
-              "type": "mac",
+        },
 
-              "value": "00:23:57:5c:36:91"
+        "unknown-tlvs": {
 
-            },
+          "unknown-tlv": {
 
-            "descr": "enx0023575c3691",
+            "oui": "00,12,0F",
 
-            "ttl": "120"
+            "subtype": "7",
+
+            "len": "2",
+
+            "value": "00,0B"
 
           }
 
@@ -168,7 +76,7 @@
 
       }
 
-    ]
+    }
 
   }
 

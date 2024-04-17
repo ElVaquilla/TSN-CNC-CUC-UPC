@@ -2,73 +2,145 @@
 
   "lldp": {
 
-    "interface": {
+    "interface": [
 
-      "PORT.3": {
+      {
 
-        "via": "LLDP",
+        "PORT_0": {
 
-        "rid": "2",
+          "via": "LLDP",
 
-        "age": "3 days, 03:15:55",
+          "rid": "19",
 
-        "chassis": {
+          "age": "0 day, 01:11:40",
 
-          "SOCE_MTSN_KIT": {
+          "chassis": {
+
+            "RELY_TSN_PCIe": {
+
+              "id": {
+
+                "type": "mac",
+
+                "value": "70:f8:e7:d0:35:f7"
+
+              },
+
+              "descr": "RELY_TSN_PCIe",
+
+              "mgmt-ip": [
+
+                "192.168.4.50",
+
+                "fe80::72f8:e7ff:fed0:35f7"
+
+              ],
+
+              "mgmt-iface": [
+
+                "3",
+
+                "3"
+
+              ],
+
+              "capability": {
+
+                "type": "Bridge",
+
+                "enabled": true
+
+              }
+
+            }
+
+          },
+
+          "port": {
 
             "id": {
 
               "type": "mac",
 
-              "value": "fa:44:f8:8c:43:e3"
+              "value": "70:f8:e7:d0:35:f8"
 
             },
 
-            "descr": "SOCE_MTSN_KIT 20.1.0",
+            "descr": "PORT_0",
 
-            "mgmt-ip": "192.168.2.65",
-
-            "mgmt-iface": "4",
-
-            "capability": {
-
-              "type": "Bridge",
-
-              "enabled": true
-
-            }
+            "ttl": "40"
 
           }
 
-        },
+        }
 
-        "port": {
+      },
 
-          "id": {
+      {
 
-            "type": "mac",
+        "PORT_1": {
 
-            "value": "70:f8:e7:d0:08:a3"
+          "via": "LLDP",
+
+          "rid": "18",
+
+          "age": "0 day, 01:11:41",
+
+          "chassis": {
+
+            "RELY_TSN_PCIe": {
+
+              "id": {
+
+                "type": "mac",
+
+                "value": "70:f8:e7:d0:35:ef"
+
+              },
+
+              "descr": "RELY_TSN_PCIe",
+
+              "mgmt-ip": [
+
+                "192.168.4.51",
+
+                "fe80::72f8:e7ff:fed0:35ef"
+
+              ],
+
+              "mgmt-iface": [
+
+                "3",
+
+                "3"
+
+              ],
+
+              "capability": {
+
+                "type": "Bridge",
+
+                "enabled": true
+
+              }
+
+            }
 
           },
 
-          "descr": "PORT_0",
+          "port": {
 
-          "ttl": "120"
+            "id": {
 
-        },
+              "type": "mac",
 
-        "unknown-tlvs": {
+              "value": "70:f8:e7:d0:35:f0"
 
-          "unknown-tlv": {
+            },
 
-            "oui": "00,12,0F",
+            "descr": "PORT_1",
 
-            "subtype": "7",
-
-            "len": "2",
-
-            "value": "00,0B"
+            "ttl": "40"
 
           }
 
@@ -76,7 +148,7 @@
 
       }
 
-    }
+    ]
 
   }
 

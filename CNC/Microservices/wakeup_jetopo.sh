@@ -1,4 +1,4 @@
-sudo python3 Topology_discovery/test.py
+#sudo python3 Topology_discovery/test.py
 docker-compose down 
 
 docker-compose up -d

@@ -119,36 +119,40 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
                           "time-interval-value" :time_interval_value # Nanoseconds
                         }
             admin_control_list.append(
-                {
-                    "index": str(offsets_index),
-                    "operation-name": "set-gate-states",
-                    "sgs-params": sgs_params
+                {#sched-gate-control-entry
+                    "index": str(offsets_index), #does not appear in 09-04-2021 revision
+                    "operation-name": "set-gate-states", #yang checked
+                    #"sgs-params": sgs_params #does not appear in 09-04-2021 revision --> gate-states-value + time-interval-value
+                    "gate-states-value": str(int(gate_state)),
+                    "time-interval-value" :time_interval_value # Nanoseconds 
                 }
             )
             offsets_index = offsets_index + 1
-        per_link_payload[link] = {
-            "interface": 
-            {
-                "name": interface,
-                "type" : "iana-if-type:ethernetCsmacd",
-                "ieee802-dot1q-sched:gate-parameters": {
-                    "admin-gate-states": "255",
-                    "gate-enabled": "true",
-                    "admin-control-list-length": len(offsets_list),
-                    "config-change": "true",
-                    "admin-cycle-time": {
-                        "numerator": "1",
-                        "denominator": str(int(1000000/(hyperperiod)))
-                    },
-                    "admin-control-list" : admin_control_list,
-                    "admin-base-time": {
-                        "seconds": "0",
-                        "fractional-seconds": "0"
-                    },
-                    "admin-cycle-time-extension": "0"
-                }
-            }
-        }
+            per_link_payload[link] = {
+                    "interface": {
+                                "name": interface,
+                                "type": "ianaift:ethernetCsmacd",
+                                "bridge-port": {
+                                    "gate-parameter-table": {
+                                    "gate-enabled": "true",
+                                    "admin-gate-states": "255",
+                                    "admin-control-list": {
+                                        "gate-control-entry": admin_control_list
+                                    },
+                                    "admin-cycle-time": {
+                                        "numerator": "1",
+                                        "denominator": str(int(1000000/(hyperperiod)))
+                                    },
+                                    "admin-cycle-time-extension": "0",
+                                    "admin-base-time": {
+                                        "seconds": "0",
+                                        "nanoseconds": "0"
+                                    },
+                                    "config-change": "true"
+                                }
+                            }
+                        }
+                    }
         print("----------------------------PAYLOAD----------------------------")
         print(per_link_payload) 
     return per_link_payload

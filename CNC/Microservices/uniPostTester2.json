@@ -12,7 +12,7 @@
                     {
                         "mac-address": "12-5A-99-aC-BF-b7",
                         "interface-name": "eth0",
-                        "ip": "172.17.0.1"
+                        "ip": "192.168.4.51"
                     }
                 ],
                 "data-frame-specification": [
@@ -54,7 +54,7 @@
                     {
                         "mac-address": "60-F2-62-74-45-F4",
                         "interface-name": "eth1",
-                        "ip":"192.168.4.68"
+                        "ip":"192.168.4.50"
                     }
                 ],
 

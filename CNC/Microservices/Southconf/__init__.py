@@ -167,6 +167,7 @@ if __name__ == "__main__":
                                     print(switchConfName)
                                     print(interface)
                                     print("Link "+str(key))
+                                    print(f"----------------RESPONSE TO REQUEST: {request}")
                                     
                                     
 
@@ -175,7 +176,7 @@ if __name__ == "__main__":
         
         #request= REST_Device_configuration (per_link_payload[" 0"], "TSN_SWITCH_1")
         #print(json.dumps(per_link_payload[" 0"]))
-        print(f"this is the other request {request}")
+        
         print(identificator)
     else:
         print("There is not input data, check the previous microservices or the RabbitMQ logs")

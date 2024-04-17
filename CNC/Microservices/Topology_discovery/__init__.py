@@ -12,8 +12,8 @@ try:
     os.mkdir('devices')
 except:
     print("already_created")
-'''
-os.system('lldpcli show neighbors -f json > nodes.json')
+''''
+os.system('sudo lldpcli show neighbors -f json > nodes.json')
 n = open("nodes.json")
 jsonNodes = json.load(n)
 jsonStringNodes = json.dumps(jsonNodes)
@@ -23,19 +23,21 @@ with open('sw_addresses.conf', 'a') as t:
     t.truncate(0)
     for networkNode in networkNodes:
         t.write(str(networkNode) + '\n')
-'''
+
 with open('myIps.txt', 'r') as myIps:
     myIps=myIps.read().split('\n') 
-   
+ 
 print('The host IP addresses are '+str(myIps))
+'''
 with open('sw_addresses.conf', 'r') as address_file:
-    addresses=address_file.read().split('\n')
+    addresses = address_file.read().split('\n')
+    #addresses.remove("")
     print(addresses, type(addresses))
 
 for mgmtIp in addresses:
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(mgmtIp, username='soc-e', password='soc-e')
+    ssh.connect(mgmtIp, username='sys-admin', password='sys-admin')
     ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('ip -f inet addr show eth0 | sed -En -e \'s/.*inet ([0-9.]+).*/\\1/p\'') #Ask for the data plane ip address
     time.sleep(1)
     data = ssh_stdout.readlines()
@@ -54,11 +56,16 @@ for mgmtIp in addresses:
         i += 1
         print("The node's data plane IP address is "+str(nodeTSN.ip))
         print("The node's id is "+str(nodeTSN.id))
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('sudo lldpcli show neighbors -f json')
-    time.sleep(1)
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('sudo lldpcli show neighbors -f json',get_pty=True)
+    ssh_stdin.write('sys-admin\n')
+    ssh_stdin.flush()
     data = ssh_stdout.readlines()
+    #print("DATA----------")
+    #print(data)
     with open('devices/topology_'+ mgmtIp + '.json', 'a') as f:
         f.truncate(0)
+        del data[0:2]
+        #data = data[:-5]
         for line in data:
            f.write(str(line) + '\n')
 
@@ -76,9 +83,13 @@ for file in os.listdir("./devices"):
         print(find_values('mgmt-ip',jsonstring))
 
         try:
+            finalNeighbors = []
             neighbors = find_values('mgmt-ip',jsonstring) #neighbors of given node
+            for neighbor in neighbors:
+                finalNeighbors.append(neighbor[0])
             print ("FOUND NEIGHBORS ------------------------")
-            print (neighbors)
+            print (finalNeighbors)
+            finalNeighborsset = set(finalNeighbors)
             neighborPorts = find_values('port', jsonstring) #Ports belonging to neighbors of the given node
             jsonPortNames = json.dumps(neighborPorts)
             portNames = find_values('descr', jsonPortNames) #name of the neighbors' interface (port) directly connected to the given node
@@ -99,7 +110,7 @@ for file in os.listdir("./devices"):
                     for key in myInterface:
                         if key.startswith('PORT.'):
                             modKey = key.replace('.','_')
-                        myInterfaces.append(modKey)
+                        myInterfaces.append(key)
             print("SELF INTERFACES ----- ")
             print(myInterfaces)
            # interfacesData = json.dumps(interfaces)
@@ -107,7 +118,7 @@ for file in os.listdir("./devices"):
             for tsndevice in nodeList:
                 j = 0
                 if (tsndevice.confIp == device):
-                    for neighbor in neighbors:
+                    for neighbor in finalNeighborsset:
                         neighborId = findIdbyIp(nodeList, neighbor)
                         if neighborId is None:  #You just found an end device or CNC
                             #if neighbor in myIps: #CNC is being reported as neighbor

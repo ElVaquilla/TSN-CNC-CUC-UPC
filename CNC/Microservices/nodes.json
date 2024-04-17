@@ -1,15 +1,15 @@
 {
   "lldp": {
     "interface": {
-      "enx0023575c3691": {
+      "eth0": {
         "via": "LLDP",
         "rid": "1",
-        "age": "0 day, 01:21:13",
+        "age": "0 day, 00:12:12",
         "chassis": {
           "SOCE_MTSN_KIT": {
             "id": {
               "type": "mac",
-              "value": "da:04:ac:7f:ae:8b"
+              "value": "6e:95:9e:64:45:7f"
             },
             "descr": "SOCE_MTSN_KIT 20.1.0",
             "mgmt-ip": "192.168.2.65",
@@ -25,7 +25,7 @@
             "type": "mac",
             "value": "70:f8:e7:d0:08:a3"
           },
-          "descr": "PORT_1",
+          "descr": "PORT_3",
           "ttl": "120"
         },
         "unknown-tlvs": {

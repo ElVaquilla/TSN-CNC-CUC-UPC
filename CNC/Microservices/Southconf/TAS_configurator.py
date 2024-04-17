@@ -131,11 +131,17 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
             per_link_payload[link] = {
                     "interface": {
                                 "name": interface,
-                                "type": "ianaift:ethernetCsmacd",
+                                "type": "iana-if-type:ethernetCsmacd",
                                 "bridge-port": {
                                     "gate-parameter-table": {
                                     "gate-enabled": "true",
                                     "admin-gate-states": "255",
+                                    "supported-list-max": 90,
+                                    "supported-cycle-max": {
+                                        "numerator": 99999999,
+                                        "denominator": 999999999
+                                    },
+                                    "supported-interval-max": 999999999,
                                     "admin-control-list": {
                                         "gate-control-entry": admin_control_list
                                     },

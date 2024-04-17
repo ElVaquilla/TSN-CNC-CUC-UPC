@@ -1,0 +1,97 @@
+{
+  "lldp": {
+    "interface": [
+      {
+        "enx0023575c3691": {
+          "via": "LLDP",
+          "rid": "2",
+          "age": "0 day, 00:10:09",
+          "chassis": {
+            "mtsnKitDevice1-70f8e7d008a2": {
+              "id": {
+                "type": "mac",
+                "value": "fa:44:f8:8c:43:e3"
+              },
+              "descr": "Ubuntu 16.04.7 LTS Linux 4.14.0-00008-g2d52cacc6151 #1 SMP Thu Oct 29 09:55:52 CET 2020 aarch64",
+              "mgmt-ip": "192.168.4.65",
+              "mgmt-iface": "3",
+              "capability": {
+                "type": "Bridge",
+                "enabled": true
+              }
+            }
+          },
+          "port": {
+            "id": {
+              "type": "mac",
+              "value": "70:f8:e7:d0:08:a1"
+            },
+            "descr": "eth0",
+            "ttl": "120"
+          }
+        }
+      },
+      {
+        "enx0023575c3691": {
+          "via": "LLDP",
+          "rid": "2",
+          "age": "0 day, 00:10:09",
+          "chassis": {
+            "mtsnKitDevice1-70f8e7d008a2": {
+              "id": {
+                "type": "mac",
+                "value": "fa:44:f8:8c:43:e3"
+              },
+              "descr": "Ubuntu 16.04.7 LTS Linux 4.14.0-00008-g2d52cacc6151 #1 SMP Thu Oct 29 09:55:52 CET 2020 aarch64",
+              "mgmt-ip": "192.168.4.65",
+              "mgmt-iface": "3",
+              "capability": {
+                "type": "Bridge",
+                "enabled": true
+              }
+            }
+          },
+          "port": {
+            "id": {
+              "type": "mac",
+              "value": "70:f8:e7:d0:08:a3"
+            },
+            "descr": "PORT.1",
+            "ttl": "120"
+          }
+        }
+      },
+      {
+        "enx0023575c2612": {
+          "via": "LLDP",
+          "rid": "2",
+          "age": "0 day, 00:10:09",
+          "chassis": {
+            "mtsnKitDevice1-70f8e7d008a2": {
+              "id": {
+                "type": "mac",
+                "value": "fa:44:f8:8c:43:e3"
+              },
+              "descr": "Ubuntu 16.04.7 LTS Linux 4.14.0-00008-g2d52cacc6151 #1 SMP Thu Oct 29 09:55:52 CET 2020 aarch64",
+              "mgmt-ip": "192.168.4.65",
+              "mgmt-iface": "3",
+              "capability": {
+                "type": "Bridge",
+                "enabled": true
+              }
+            }
+          },
+          "port": {
+            "id": {
+              "type": "mac",
+              "value": "70:f8:e7:d0:08:a2"
+            },
+            "descr": "eth1",
+            "ttl": "120"
+          }
+        }
+      }
+    ]
+  }
+}
+

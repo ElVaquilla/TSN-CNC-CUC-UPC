@@ -35,12 +35,52 @@ with open('sw_addresses.conf', 'r') as address_file:
     print(addresses, type(addresses))
 
 for mgmtIp in addresses:
+    stdout_buffer = []
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(mgmtIp, username='sys-admin', password='sys-admin')
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('ip -f inet addr show eth0 | sed -En -e \'s/.*inet ([0-9.]+).*/\\1/p\'') #Ask for the data plane ip address
-    time.sleep(1)
-    data = ssh_stdout.readlines()
+    ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)
+    #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('ip -f inet addr show eth0 | sed -En -e \'s/.*inet ([0-9.]+).*/\\1/p\'') #Ask for the data plane ip address
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('ip f')
+    #ssh_stdin.flush()
+    ssh_stdin.close()
+    #time.sleep(3)
+    status=ssh_stdout.channel.recv_exit_status()
+    print("STATUS")
+    print(status)
+    #ssh_stdout.close()
+    #ssh_stdout.channel.set_combine_stderr(True)
+    #ssh_stdin.close()
+    #data=ssh_stdout.readlines()
+    #print (ssh_stdout.read(100))
+    for line in ssh_stdout: 
+        print(line)
+
+    '''
+    while True:
+        print(ssh_stdout.readline())
+        if ssh_stdout.channel.exit_status_ready():
+            break
+    '''
+    #ssh_stdout.close()
+    #ssh_stderr.close()
+    #ssh.close()
+    
+
+    #data = ssh_stdout.readlines()
+    #decoded = data.decode("utf-8")
+    #print(decoded)
+    '''
+    channel = ssh.invoke_shell()
+    stdin = channel.makefile('wb')
+    stdout = channel.makefile('r')
+    stdin.write("ip -f"+'\n')
+    stdin.flush()
+    stdin.close()
+    for line in stdout: 
+        print(line)
+    #ssh.close()
+    '''
+    #print(data)
     with open('devices/relatedIPs_'+ mgmtIp + '.txt', 'a') as f: #Creates file with related IPs (management IP address and data plane IP address)
         f.truncate(0)
         f.write(mgmtIp+'\n')

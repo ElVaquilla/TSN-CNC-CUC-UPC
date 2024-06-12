@@ -8,6 +8,7 @@ txt_files = []
 nodeList = []
 i = 0
 j = 0
+interval = 10
 try:
     os.mkdir('devices')
 except:
@@ -35,59 +36,58 @@ with open('sw_addresses.conf', 'r') as address_file:
     print(addresses, type(addresses))
 
 for mgmtIp in addresses:
-    stdout_buffer = []
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)
-    #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('ip -f inet addr show eth0 | sed -En -e \'s/.*inet ([0-9.]+).*/\\1/p\'') #Ask for the data plane ip address
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('ip f')
-    #ssh_stdin.flush()
-    ssh_stdin.close()
-    #time.sleep(3)
-    status=ssh_stdout.channel.recv_exit_status()
-    print("STATUS")
-    print(status)
-    #ssh_stdout.close()
-    #ssh_stdout.channel.set_combine_stderr(True)
-    #ssh_stdin.close()
-    #data=ssh_stdout.readlines()
-    #print (ssh_stdout.read(100))
-    for line in ssh_stdout: 
-        print(line)
 
-    '''
-    while True:
-        print(ssh_stdout.readline())
-        if ssh_stdout.channel.exit_status_ready():
-            break
-    '''
-    #ssh_stdout.close()
-    #ssh_stderr.close()
-    #ssh.close()
+    try:
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)
+        
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('ip -f inet addr show eth0 | sed -En -e \'s/.*inet ([0-9.]+).*/\\1/p\'') #Ask for the data plane ip address
+        print("Connected with TSN switch")
+        ##ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('ip\n\004')
+        ssh_stdin.flush()
+        #ssh_stdin.close()
+        #time.sleep(3)
+        #status=ssh_stdout.channel.recv_exit_status()
+        ##print("STATUS")
+        ##print(status)
+        #ssh_stdout.close()
+        #ssh_stdout.channel.set_combine_stderr(True)
+        #ssh_stdin.close()
+        #data=ssh_stdout.readlines()
+        #print (ssh_stdout.read(100))
+        data=ssh_stdout.readlines()
+        #print(data)  
+
     
+    except:
 
-    #data = ssh_stdout.readlines()
-    #decoded = data.decode("utf-8")
-    #print(decoded)
-    '''
-    channel = ssh.invoke_shell()
-    stdin = channel.makefile('wb')
-    stdout = channel.makefile('r')
-    stdin.write("ip -f"+'\n')
-    stdin.flush()
-    stdin.close()
-    for line in stdout: 
-        print(line)
-    #ssh.close()
-    '''
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)
+        print("Connected with logical 5G-TSN bridge")
+        channel = ssh.invoke_shell()
+        print("invoked shell")
+        stdin = channel.makefile('wb')
+        stdout = channel.makefile('r')
+        stdin.write('ip -f inet addr show eth0 | sed -En -e \'s/.*inet ([0-9.]+).*/\\1/p\''+'\n')
+        stdin.flush()
+        #stdin.close()
+        print("command sent")
+        #print(stdout.readlines())
+        data=stdout.readlines()
+        print(data)
+    
+    
     #print(data)
     with open('devices/relatedIPs_'+ mgmtIp + '.txt', 'a') as f: #Creates file with related IPs (management IP address and data plane IP address)
         f.truncate(0)
         f.write(mgmtIp+'\n')
         nodeTSN = node (i,mgmtIp,0,[]) #Creates node instance
         for line in data:
-            f.write(str(line) + '\n')
-            nodeTSN.ip = line
+            if (line.startswith("1")):
+                f.write(str(line) + '\n')
+                nodeTSN.ip = line
         #if i == 0:
             #nodeTSN.ip = "192.168.4.64"
         #elif i == 1:
@@ -96,12 +96,32 @@ for mgmtIp in addresses:
         i += 1
         print("The node's data plane IP address is "+str(nodeTSN.ip))
         print("The node's id is "+str(nodeTSN.id))
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('sudo lldpcli show neighbors -f json',get_pty=True)
-    ssh_stdin.write('sys-admin\n')
-    ssh_stdin.flush()
-    data = ssh_stdout.readlines()
-    #print("DATA----------")
-    #print(data)
+    
+    try:
+        ### TSN SWITCHS
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('sudo lldpcli show neighbors -f json',get_pty=True)
+        ssh_stdin.write('sys-admin\n')
+        ssh_stdin.flush()
+        data = ssh_stdout.readlines()
+        print("DATA----------")
+        print(data)
+    
+    except:
+        ### LOGICAL 5G-TSN BRIDGE
+        ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)
+        print("Connected with logical 5G-TSN bridge")
+        channel = ssh.invoke_shell()
+        print("invoked shell")
+        stdin = channel.makefile('wb')
+        stdout = channel.makefile('r')
+        stdin.write('sudo lldpcli show neighbors -f json'+'\n')
+        stdin.flush()
+        #stdin.close()
+        print("command sent")
+        #print(stdout.readlines())
+        data=stdout.readlines()
+        #print(data)
+
     with open('devices/topology_'+ mgmtIp + '.json', 'a') as f:
         f.truncate(0)
         del data[0:2]

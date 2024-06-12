@@ -1,0 +1,156 @@
+{
+
+"lldp": {
+
+"interface": [
+
+{
+
+"PORT_0": {
+
+"via": "LLDP",
+
+"rid": "16",
+
+"age": "0 day, 00:28:43",
+
+"chassis": {
+
+"RELY-TSN4": {
+
+"id": {
+
+"type": "mac",
+
+"value": "70:f8:e7:d0:35:45"
+
+},
+
+"descr": "RELY-TSN4",
+
+"mgmt-ip": [
+
+"192.168.4.67",
+
+"fe80::72f8:e7ff:fed0:3545"
+
+],
+
+"mgmt-iface": [
+
+"3",
+
+"3"
+
+],
+
+"capability": {
+
+"type": "Bridge",
+
+"enabled": true
+
+}
+
+}
+
+},
+
+"port": {
+
+"id": {
+
+"type": "mac",
+
+"value": "70:f8:e7:d0:35:47"
+
+},
+
+"descr": "PORT_1",
+
+"ttl": "40"
+
+}
+
+}
+
+},
+
+{
+
+"PORT_1": {
+
+"via": "LLDP",
+
+"rid": "5",
+
+"age": "0 day, 00:29:11",
+
+"chassis": {
+
+"RELY-TSN4": {
+
+"id": {
+
+"type": "mac",
+
+"value": "de:44:49:b5:a3:a2"
+
+},
+
+"descr": "RELY-TSN4",
+
+"mgmt-ip": [
+
+"192.168.4.66",
+
+"fe80::dc44:49ff:feb5:a3a2"
+
+],
+
+"mgmt-iface": [
+
+"3",
+
+"3"
+
+],
+
+"capability": {
+
+"type": "Bridge",
+
+"enabled": true
+
+}
+
+}
+
+},
+
+"port": {
+
+"id": {
+
+"type": "mac",
+
+"value": "70:f8:e7:d0:35:4a"
+
+},
+
+"descr": "PORT_1",
+
+"ttl": "40"
+
+}
+
+}
+
+}
+
+]
+
+}
+
+}
+

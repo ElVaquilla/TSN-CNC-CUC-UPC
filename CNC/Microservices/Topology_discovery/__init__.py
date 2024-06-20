@@ -38,6 +38,7 @@ with open('sw_addresses.conf', 'r') as address_file:
 for mgmtIp in addresses:
 
     try:
+        print("hola1")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)
@@ -61,7 +62,7 @@ for mgmtIp in addresses:
 
     
     except:
-
+        print("hola2")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)

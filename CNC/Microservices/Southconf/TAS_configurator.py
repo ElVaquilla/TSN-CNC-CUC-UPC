@@ -96,7 +96,7 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
     grouped_offsets=gates_parameter_generator(Clean_offsets)
     grouped_offsets=full_scheduler_generator(grouped_offsets, Repetitions_Descriptor, Streams_Period)
     final_sorted_offsets = gates_states_values_generator(grouped_offsets, priority_mapping)
-
+    
     per_link_payload = {}
     for link, streams in final_sorted_offsets.items():
         
@@ -162,6 +162,7 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
         print("----------------------------PAYLOAD----------------------------")
         print(per_link_payload) 
     return per_link_payload
+
 
 # hyperperiod= 32_000 # Hyperperiod is in microseconds
 # Repetitions_Descriptor = [[0, 0], [0, 1], [0, 1], [0, 1], [0, 1]]

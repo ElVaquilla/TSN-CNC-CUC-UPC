@@ -122,8 +122,8 @@ if __name__ == "__main__":
         # device_list should be created
         for index, device in identificator.items() :
             if device.startswith('192.168.2.'):
-                 request = REST_DEVICE_creation(device, "TSN_SWITCH_" + str(countSwitches))
-                 print(request)
+                 #request = REST_DEVICE_creation(device, "TSN_SWITCH_" + str(countSwitches))
+                 #print(request)
                  switchName = "TSN_SWITCH_"+str(countSwitches)
                  switchesIDs.append([device,switchName])
                  countSwitches += 1
@@ -163,7 +163,8 @@ if __name__ == "__main__":
                                     switchConfName = element[1]
                                     interface = switchInterfaces[int(link.index(switchID))]
                                     per_link_payload = payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,priority_mapping, Hyperperiod, interface)
-                                    request= REST_Device_configuration (per_link_payload[" "+str(key)], switchConfName, interface) #El indice de per_link_payload hace referencia al ID del link al que pertenece la interficie que se configura
+                                    #request= NETCONF_Device_configuration (per_link_payload[" "+str(key)], switchConfName, interface, switchIP) 
+                                    request= NETCONF_Device_configuration (per_link_payload[" "+str(key)], switchIP) #El indice de per_link_payload hace referencia al ID del link al que pertenece la interficie que se configura
                                     print(switchConfName)
                                     print(interface)
                                     print("Link "+str(key))

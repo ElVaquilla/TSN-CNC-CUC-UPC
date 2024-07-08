@@ -1,6 +1,8 @@
 import requests
 import json
-
+from netconf_client.connect import connect_ssh
+from netconf_client.ncclient import Manager
+from lxml import etree
 '''
 This function is for allocating the device as a resource for opendaylight
 This is a required previous step for the configuration of any device using netconf restconf
@@ -21,6 +23,7 @@ This is a required previous step for the configuration of any device using netco
                                                       │Device │
                                                       └───────┘
 
+'''
 '''
 def REST_DEVICE_creation(IP_address, device_name):
     device = {
@@ -57,8 +60,9 @@ def REST_DEVICE_creation(IP_address, device_name):
     requests.packages.urllib3.disable_warnings()
     response = requests.post(url, headers=headers, data=json.dumps(payload), auth=(device['username'], device['password']), verify=False)    
     return response
-
-def REST_Device_configuration (payload, device_name, device_interface):
+'''
+def NETCONF_Device_configuration (payload, ip):
+    '''
     device = {
         "ip": "opendaylight",
         "username": "admin",
@@ -75,4 +79,8 @@ def REST_Device_configuration (payload, device_name, device_interface):
     print("_________________This is the url_________________", url)
     # Sending the message
     response = requests.put(url, headers=headers, data=json.dumps(payload), auth=(device['username'], device['password']), verify=False)
-    return response
+    '''
+    session = connect_ssh(host=ip, port=830, username="root", password="root")
+    mgr = Manager(session, timeout=120)
+    mgr.edit_config(config=str(payload))
+    return mgr

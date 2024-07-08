@@ -84,17 +84,17 @@ services:
     depends_on: 
       - rabbitmq-microservice
 
-  opendaylight:
-    build:
-      context: .
-      dockerfile: Opendaylight/Dockerfile
-    restart: always 
-    stdin_open: true 
-    tty: true
-    ports:
-      - 6633:6633
-      - 8101:8101
-      - 8181:8181
+# opendaylight:
+#    build:
+#      context: .
+#      dockerfile: Opendaylight/Dockerfile
+#    restart: always 
+#    stdin_open: true 
+#    tty: true
+#    ports:
+#      - 6633:6633
+#      - 8101:8101
+#      - 8181:8181
   
   vlan_configurator:
     build:

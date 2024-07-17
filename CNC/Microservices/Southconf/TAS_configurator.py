@@ -171,11 +171,11 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
 
         # Añadir el numerador del ciclo máximo compatible
         numerator = etree.SubElement(admin_cycle_time, "numerator")
-        numerator.text = "1000000"
+        numerator.text = "1"
 
         # Añadir el denominador del ciclo máximo compatible
         denominator = etree.SubElement(admin_cycle_time, "denominator")
-        denominator.text = "1000000000"
+        denominator.text = str(int(1000000/hyperperiod))
 
         #admin cycle time extension
         admin_cycle_time_extension = etree.SubElement(gate_parameter_table, "admin-cycle-time-extension")

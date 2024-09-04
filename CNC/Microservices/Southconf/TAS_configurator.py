@@ -275,7 +275,7 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
         # Imprimir la cadena XML
         # Convertir el elemento a una cadena XML
         xml_string = etree.tostring(config, pretty_print=True, encoding="unicode")
-        print(xml_string)
+        #print(xml_string)
         per_link_payload[link] = xml_string
     return per_link_payload
 

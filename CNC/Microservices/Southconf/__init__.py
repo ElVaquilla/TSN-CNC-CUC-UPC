@@ -168,6 +168,8 @@ if __name__ == "__main__":
                                     print(switchConfName)
                                     print(interface)
                                     print("Link "+str(key))
+                                    print(str(per_link_payload[" "+str(key)]))
+
                                     print(f"----------------RESPONSE TO REQUEST: {request}")
                                     
                                     

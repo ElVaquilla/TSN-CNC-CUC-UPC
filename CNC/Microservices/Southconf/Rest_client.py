@@ -80,7 +80,14 @@ def NETCONF_Device_configuration (payload, ip):
     # Sending the message
     response = requests.put(url, headers=headers, data=json.dumps(payload), auth=(device['username'], device['password']), verify=False)
     '''
-    session = connect_ssh(host=ip, port=830, username="root", password="root")
-    mgr = Manager(session, timeout=120)
-    mgr.edit_config(config=str(payload))
-    return mgr
+    try:
+        session = connect_ssh(host=ip, port=830, username="root", password="root")
+        mgr = Manager(session, timeout=120)
+        mgr.edit_config(config=str(payload))
+        return mgr
+    except:
+        session = connect_ssh(host=ip, port=830, username="sys-admin", password="sys-admin")
+        mgr = Manager(session, timeout=120)
+        mgr.edit_config(config=str(payload))
+        return mgr
+

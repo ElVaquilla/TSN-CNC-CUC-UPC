@@ -1,0 +1,158 @@
+{
+
+  "lldp": {
+
+    "interface": [
+
+      {
+
+        "PORT_0": {
+
+          "via": "LLDP",
+
+          "rid": "3",
+
+          "age": "1 day, 00:02:43",
+
+          "chassis": {
+
+            "RELY_TSN_PCIe": {
+
+              "id": {
+
+                "type": "mac",
+
+                "value": "70:f8:e7:d0:35:f7"
+
+              },
+
+              "descr": "RELY_TSN_PCIe",
+
+              "mgmt-ip": [
+
+                "192.168.4.50",
+
+                "fe80::72f8:e7ff:fed0:35f7"
+
+              ],
+
+              "mgmt-iface": [
+
+                "3",
+
+                "3"
+
+              ],
+
+              "capability": {
+
+                "type": "Bridge",
+
+                "enabled": true
+
+              }
+
+            }
+
+          },
+
+          "port": {
+
+            "id": {
+
+              "type": "mac",
+
+              "value": "70:f8:e7:d0:35:f8"
+
+            },
+
+            "descr": "PORT_0",
+
+            "ttl": "40"
+
+          }
+
+        }
+
+      },
+
+      {
+
+        "PORT_1": {
+
+          "via": "LLDP",
+
+          "rid": "4",
+
+          "age": "1 day, 00:02:43",
+
+          "chassis": {
+
+            "RELY_TSN_PCIe": {
+
+              "id": {
+
+                "type": "mac",
+
+                "value": "70:f8:e7:d0:35:ef"
+
+              },
+
+              "descr": "RELY_TSN_PCIe",
+
+              "mgmt-ip": [
+
+                "192.168.4.51",
+
+                "fe80::72f8:e7ff:fed0:35ef"
+
+              ],
+
+              "mgmt-iface": [
+
+                "3",
+
+                "3"
+
+              ],
+
+              "capability": {
+
+                "type": "Bridge",
+
+                "enabled": true
+
+              }
+
+            }
+
+          },
+
+          "port": {
+
+            "id": {
+
+              "type": "mac",
+
+              "value": "70:f8:e7:d0:35:f0"
+
+            },
+
+            "descr": "PORT_1",
+
+            "ttl": "40"
+
+          }
+
+        }
+
+      }
+
+    ]
+
+  }
+
+}
+
+
+

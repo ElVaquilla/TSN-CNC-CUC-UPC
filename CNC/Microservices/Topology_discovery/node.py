@@ -12,8 +12,14 @@ class node:
         
 def findIdbyIp (nodeList, ip):
     for nodetsn in nodeList:
-        if ((str(nodetsn.ip).rstrip('\n')==str(ip)) or (str(nodetsn.confIp).rstrip('\n')==str(ip))):
-            return nodetsn.id
+        for dataplaneIp in nodetsn.ip:
+            if ((str(dataplaneIp).rstrip('\r\n')==str(ip)) ):
+                return nodetsn.id
+        
+            if(len(nodetsn.ip) > 1):
+                for dataplaneIp in nodetsn.ip:
+                    if(str(ip)==str(dataplaneIp)):
+                        return nodetsn.id
         
 def find_values(id, json_repr):
     results = []

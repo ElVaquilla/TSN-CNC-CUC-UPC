@@ -38,7 +38,7 @@ with open('sw_addresses.conf', 'r') as address_file:
 for mgmtIp in addresses:
 
     try:
-        print("hola1")
+        print("Trying simple TSN bridge connection")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)
@@ -62,7 +62,7 @@ for mgmtIp in addresses:
 
     
     except:
-        print("hola2")
+        print("Trying 5G-TSN bridge connection")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(mgmtIp, username='sys-admin', password='sys-admin', banner_timeout=200)
@@ -84,18 +84,20 @@ for mgmtIp in addresses:
     with open('devices/relatedIPs_'+ mgmtIp + '.txt', 'a') as f: #Creates file with related IPs (management IP address and data plane IP address)
         f.truncate(0)
         f.write(mgmtIp+'\n')
-        nodeTSN = node (i,mgmtIp,0,[]) #Creates node instance
+        nodeTSN = node (i,mgmtIp,[],[]) #Creates node instance
         for line in data:
             if (line.startswith("1")):
-                f.write(str(line) + '\n')
-                nodeTSN.ip = line
+                f.write(str(line))
+                nodeTSN.ip.append(line)
+        print("--------------------- NODE TSN RELATED IPs: "+str(nodeTSN.ip))
         #if i == 0:
             #nodeTSN.ip = "192.168.4.64"
         #elif i == 1:
             #nodeTSN.ip = "192.168.4.65"
         nodeList.append(nodeTSN) #Adds node to node list
         i += 1
-        print("The node's data plane IP address is "+str(nodeTSN.ip))
+        for ip in nodeTSN.ip:
+            print("The node's data plane IP address is "+str(ip))
         print("The node's id is "+str(nodeTSN.id))
     
     try:
@@ -150,7 +152,7 @@ for file in os.listdir("./devices"):
                 finalNeighbors.append(neighbor[0])
             print ("FOUND NEIGHBORS ------------------------")
             print (finalNeighbors)
-            finalNeighborsset = set(finalNeighbors)
+            #finalNeighborsset = frozenset(finalNeighbors) ####WARNING POINT OF FAILURE
             neighborPorts = find_values('port', jsonstring) #Ports belonging to neighbors of the given node
             jsonPortNames = json.dumps(neighborPorts)
             portNames = find_values('descr', jsonPortNames) #name of the neighbors' interface (port) directly connected to the given node
@@ -179,21 +181,30 @@ for file in os.listdir("./devices"):
             for tsndevice in nodeList:
                 j = 0
                 if (tsndevice.confIp == device):
-                    for neighbor in finalNeighborsset:
+                    for neighbor in finalNeighbors: #finalneighborsset ?
                         neighborId = findIdbyIp(nodeList, neighbor)
                         if neighborId is None:  #You just found an end device or CNC
                             #if neighbor in myIps: #CNC is being reported as neighbor
                                 #next(neighbors, None)
                                 #continue
                             print("End device found with IP address: "+ str(neighbor) +". ID assigned: "+str(i))
-                            endDevice = node(i,neighbor, 0,[] )
-                            endDevice.neighbors.append([tsndevice.id,myInterfaces[j],portNames[j]]) #neighbors structure : [neighbor ID, neighbor Interface, self interface]
+                            endDevice = node(i,neighbor, [],[] )
+                            print("hola1")
+                            endDevice.neighbors.append([tsndevice.id, myInterfaces[j], portNames[j]]) #neighbors structure : [neighbor ID, neighbor Interface, self interface]
+                            print("-------PORT NAMES: " + str(portNames))
+                            print("------- MY INTERFACES: "+ str(myInterfaces))
+                            print("------- J VALUE: "+ str(j))
+                            print("hola2")
                             tsndevice.neighbors.append([i,portNames[j], myInterfaces[j]])
+                            
+                            print("hola3")
                             nodeList.append(endDevice)
+                            print("hola4")
                             j += 1
                             i += 1
                         else:
                             tsndevice.neighbors.append([neighborId,portNames[j],myInterfaces[j]]) 
+                            print("hola5")
                             j += 1
 
                               
@@ -276,10 +287,10 @@ for tsndevice in nodeList:
 
     #create list with network nodes
     networkNodes.append(tsndevice.id)
-    
+    print (tsndevice.id)
     #create list with network links
     for element in tsndevice.neighbors:
-
+        print(str(element))
         link = []
         link.append(tsndevice.id)
         neighborId = element [0]

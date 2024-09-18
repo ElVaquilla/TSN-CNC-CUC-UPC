@@ -17,5 +17,8 @@ In another bash:
 
 `sudo ./real_tester.sh` #Calculates scheduling and configures directly connected TSN switches.  
 
+## Architecture  
+
+![Micro_TSN_Architecture drawio(1)](https://github.com/user-attachments/assets/1ace8aa7-6126-4eb5-b319-15924eb91ef0)
 
 

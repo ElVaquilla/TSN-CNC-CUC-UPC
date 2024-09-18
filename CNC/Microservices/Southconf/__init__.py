@@ -70,6 +70,7 @@ from Vlans_configurator import *
 from TAS_configurator import *
 from Rest_client import *
 import time
+
 if __name__ == "__main__":
     raw_scheduler_data = os.path.exists('/var/ilp.txt')
     if(raw_scheduler_data):
@@ -169,8 +170,9 @@ if __name__ == "__main__":
                                     print(interface)
                                     print("Link "+str(key))
                                     print(str(per_link_payload[" "+str(key)]))
-
                                     print(f"----------------RESPONSE TO REQUEST: {request}")
+                                    #streams = asyncio.run
+
                                     
                                     
 

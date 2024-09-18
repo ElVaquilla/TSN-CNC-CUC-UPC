@@ -19,6 +19,11 @@ def gates_parameter_generator(Clean_offsets):
                 grouped_offsets[identificator[3]][identificator[1]] = [frame['Start']]
             except :
                 grouped_offsets[identificator[3]]= {identificator[1] : [frame['Start']]}
+    
+    print("CLEAN OFFSETS------------------------------")
+    print(Clean_offsets)
+    print("GROUPED OFFSETS----------------------------")
+    print(grouped_offsets)
 
     return grouped_offsets
        

@@ -3,6 +3,8 @@ import json
 from netconf_client.connect import connect_ssh
 from netconf_client.ncclient import Manager
 from lxml import etree
+#import httpx
+#import asyncio
 '''
 This function is for allocating the device as a resource for opendaylight
 This is a required previous step for the configuration of any device using netconf restconf
@@ -61,6 +63,16 @@ def REST_DEVICE_creation(IP_address, device_name):
     response = requests.post(url, headers=headers, data=json.dumps(payload), auth=(device['username'], device['password']), verify=False)    
     return response
 '''
+'''
+url = "http://127.0.0.1:8443/restconf/data/ieee802-dot1q-tsn-types-upc-version:tsn-uni"
+headers = {'X-SSL-Client-CN' : 'marc'}
+
+async def getStreamConfig():
+    async with httpx.AsyncClient(http1=False, http2=True) as client:
+        response = await client.get(url, headers=headers)
+        print(response.json())
+        return response.json()
+ '''   
 def NETCONF_Device_configuration (payload, ip):
     '''
     device = {

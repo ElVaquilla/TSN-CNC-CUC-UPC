@@ -3,6 +3,7 @@ ENV PYTHONBUFFERED 1
 WORKDIR /Jetconf
 RUN rm -r /home/jukebox-jetconf/yang-modules/ieee802-dot1q-tsn-types-upc-version@2018-02-15.yang
 COPY ieee802-dot1q-tsn-types-upc-version-v2@2018-02-15.yang /home/jukebox-jetconf/yang-modules/ieee802-dot1q-tsn-types-upc-version@2018-02-15.yang
+COPY tsn-streams.yang /home/jukebox-jetconf/yang-modules/tsn-streams.yang
 RUN python3 -m pip install pika==1.2.0
 RUN python3 -m pip uninstall jetconf_jukebox -y
 RUN rm /home/jukebox-jetconf/jetconf_jukebox/*.py

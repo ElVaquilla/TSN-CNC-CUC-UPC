@@ -1,0 +1,12 @@
+module tsn-streams {
+    list stream-list{
+                key index;
+                leaf index{
+                    type uint16;
+                }
+                key pcp;
+                leaf pcp{
+                    type uint16;
+                }
+    }
+}

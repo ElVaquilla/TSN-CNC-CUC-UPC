@@ -15,7 +15,7 @@ root.set("xmlns", "urn:ietf:params:xml:ns:yang:ietf-interfaces")
 interface = etree.SubElement(root, "interface")
 # Añadir el nombre de la interfaz
 name = etree.SubElement(interface, "name")
-name.text = "PORT_1"
+name.text = "PORT_2"
 
 # Añadir el tipo de interfaz
 nsiana = "urn:ietf:params:xml:ns:yang:iana-if-type"

@@ -10,9 +10,9 @@
 
           "via": "LLDP",
 
-          "rid": "3",
+          "rid": "2",
 
-          "age": "10 days, 05:14:22",
+          "age": "0 day, 00:32:27",
 
           "chassis": {
 
@@ -82,9 +82,9 @@
 
           "via": "LLDP",
 
-          "rid": "4",
+          "rid": "1",
 
-          "age": "10 days, 05:14:22",
+          "age": "0 day, 01:06:04",
 
           "chassis": {
 

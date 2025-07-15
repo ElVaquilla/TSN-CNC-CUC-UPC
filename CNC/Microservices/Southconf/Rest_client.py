@@ -96,10 +96,12 @@ def NETCONF_Device_configuration (payload, ip):
         session = connect_ssh(host=ip, port=830, username="root", password="root")
         mgr = Manager(session, timeout=120)
         mgr.edit_config(config=str(payload))
+        #session.close()
         return mgr
     except:
         session = connect_ssh(host=ip, port=830, username="sys-admin", password="sys-admin")
         mgr = Manager(session, timeout=120)
         mgr.edit_config(config=str(payload))
+        #session.close()
         return mgr
 

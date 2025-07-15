@@ -115,10 +115,10 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
 
         #############################XML BUILDING
         #crear elemento config
-        config = etree.Element("config")
+        config = etree.Element("config") #OLD -- NOT WORKING ANYMORE
         # Crear el elemento raíz
-        root = etree.SubElement(config, "interfaces")
-
+        root = etree.SubElement(config, "interfaces") #OLD -- NOT WORKING ANYMORE
+        #root = etree.Element("interfaces")
         # Añadir el espacio de nombres
         root.set("xmlns", "urn:ietf:params:xml:ns:yang:ietf-interfaces")
 
@@ -279,7 +279,8 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
 
         # Imprimir la cadena XML
         # Convertir el elemento a una cadena XML
-        xml_string = etree.tostring(config, pretty_print=True, encoding="unicode")
+        xml_string = etree.tostring(config, pretty_print=True, encoding="unicode") #OLD -- NOT WORKING ANYMORE
+        #xml_string = etree.tostring(interface, pretty_print=True, encoding="unicode")
         #print(xml_string)
         per_link_payload[link] = xml_string
     return per_link_payload

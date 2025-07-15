@@ -26,7 +26,7 @@
                         "denominator": 1
                     },
                     "max-frames-per-interval": 10,
-                    "max-frame-size": 512,
+                    "max-frame-size": 1400,
                     "transmission-selection": 0,
                     "time-aware": {
                         "earliest-transmit-offset": 10,

@@ -32,7 +32,7 @@ print('The host IP addresses are '+str(myIps))
 '''
 with open('sw_addresses.conf', 'r') as address_file:
     addresses = address_file.read().split('\n')
-    #addresses.remove("")
+    addresses.remove("")
     print(addresses, type(addresses))
 
 for mgmtIp in addresses:
@@ -301,8 +301,10 @@ for tsndevice in nodeList:
             linkInterf = []
             linkInterf.append(element [2])
             linkInterf.append(element [1])
-            linksInterfaces [x] = linkInterf
-            x+=1
+            src, dst = link
+            linkID = 10 * src + dst
+            linksInterfaces[str(linkID)] = linkInterf
+
 
     
     

@@ -10,9 +10,9 @@
 
           "via": "LLDP",
 
-          "rid": "2",
+          "rid": "5",
 
-          "age": "0 day, 00:32:27",
+          "age": "5 days, 20:31:38",
 
           "chassis": {
 
@@ -82,29 +82,29 @@
 
           "via": "LLDP",
 
-          "rid": "1",
+          "rid": "6",
 
-          "age": "0 day, 01:06:04",
+          "age": "5 days, 19:45:48",
 
           "chassis": {
 
-            "RELY_TSN_PCIe": {
+            "RELY-TSN4": {
 
               "id": {
 
                 "type": "mac",
 
-                "value": "70:f8:e7:d0:35:ef"
+                "value": "70:f8:e7:d0:35:45"
 
               },
 
-              "descr": "RELY_TSN_PCIe",
+              "descr": "RELY-TSN4",
 
               "mgmt-ip": [
 
-                "192.168.4.51",
+                "192.168.4.67",
 
-                "fe80::72f8:e7ff:fed0:35ef"
+                "fe80::72f8:e7ff:fed0:3545"
 
               ],
 
@@ -134,11 +134,11 @@
 
               "type": "mac",
 
-              "value": "70:f8:e7:d0:35:f0"
+              "value": "70:f8:e7:d0:35:47"
 
             },
 
-            "descr": "PORT_1",
+            "descr": "PORT_2",
 
             "ttl": "40"
 

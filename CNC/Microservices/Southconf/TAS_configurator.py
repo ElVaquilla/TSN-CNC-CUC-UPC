@@ -11,14 +11,23 @@ import copy
 def gates_parameter_generator(Clean_offsets):
     grouped_offsets = {}
     for frame in Clean_offsets:
-        identificator=frame['Task'].split(',')
+        # Limpia comillas, paréntesis y espacios
+        identificator = [token.strip().strip("()'") for token in frame['Task'].split(',')]
+        
         try:
-            grouped_offsets[identificator[3]][identificator[1]].append(frame['Start'])
-        except:
+            link_id = int(identificator[3])     # Ej: ' 0' → 0
+            stream_id = int(identificator[1])   # Ej: ' 1' → 1
+        except ValueError:
+            print(f"Error interpretando identificadores: {identificator}")
+            continue
+
+        try:
+            grouped_offsets[link_id][stream_id].append(frame['Start'])
+        except KeyError:
             try:
-                grouped_offsets[identificator[3]][identificator[1]] = [frame['Start']]
-            except :
-                grouped_offsets[identificator[3]]= {identificator[1] : [frame['Start']]}
+                grouped_offsets[link_id][stream_id] = [frame['Start']]
+            except KeyError:
+                grouped_offsets[link_id] = {stream_id: [frame['Start']]}
     
     print("CLEAN OFFSETS------------------------------")
     print(Clean_offsets)
@@ -98,7 +107,7 @@ def gates_states_values_generator(grouped_offsets, priority_mapping):
 '''
 Generates the payload defined in the 802.1 qcc schedule
 '''
-def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,priority_mapping, hyperperiod, interface_port):
+def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period, priority_mapping, hyperperiod, interface_port, Network_links):
 
     grouped_offsets=gates_parameter_generator(Clean_offsets)
     grouped_offsets=full_scheduler_generator(grouped_offsets, Repetitions_Descriptor, Streams_Period)
@@ -277,12 +286,28 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,prio
         '''
 
 
-        # Imprimir la cadena XML
         # Convertir el elemento a una cadena XML
-        xml_string = etree.tostring(config, pretty_print=True, encoding="unicode") #OLD -- NOT WORKING ANYMORE
-        #xml_string = etree.tostring(interface, pretty_print=True, encoding="unicode")
-        #print(xml_string)
-        per_link_payload[link] = xml_string
+        xml_string = etree.tostring(config, pretty_print=True, encoding="unicode")
+
+        # Intentar mapear usando el índice en Network_links
+        try:
+            # Si el 'link' es un entero (como 0, 1, 2...), lo usamos como índice
+            if isinstance(link, int) and 0 <= link < len(Network_links):
+                src, dst = Network_links[link]
+            else:
+                # Si no, lo ignoramos
+                print(f" El link '{link}' no es un índice válido de Network_links. Se ignora.")
+                continue
+
+            linkID = 10 * src + dst
+            per_link_payload[str(linkID)] = xml_string
+            print(f" Añadido linkID {linkID} al payload.")
+        except Exception as e:
+            print(f" Error al mapear link '{link}': {e}")
+            continue
+
+
+
     return per_link_payload
 
 

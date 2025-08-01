@@ -11,11 +11,11 @@
 
 # To execute them you can simply run 'bash tester.sh'
 
-docker-compose up -d
+docker compose up -d
 sleep 4
-docker-compose exec random_generator-microservice bash -c 'python __init__.py'
-docker-compose exec preprocessing-microservice bash -c 'python __init__.py'
-docker-compose exec ilp bash -c 'source /root/miniconda3/bin/activate base && python __init__.py'
+docker compose exec random_generator-microservice bash -c 'python __init__.py'
+docker compose exec preprocessing-microservice bash -c 'python __init__.py'
+docker compose exec ilp bash -c 'source /root/miniconda3/bin/activate base && python __init__.py'
 sleep 4
 #docker-compose down
 

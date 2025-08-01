@@ -24,6 +24,8 @@ services:
       dockerfile: Preprocessing_microservice/Dockerfile
     volumes:
       - ./Preprocessing_microservice:/preprocessing
+      - ./Topology_discovery/topology.txt:/var/topology.txt
+      - ./Preprocessing_microservice/jetconf.txt:/var/jetconf.txt
     stdin_open: true 
     tty: true
     depends_on: 

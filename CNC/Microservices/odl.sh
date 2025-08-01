@@ -1,1 +1,1 @@
-docker-compose exec opendaylight bash -c './bin/karaf'
+docker compose exec opendaylight bash -c './bin/karaf'

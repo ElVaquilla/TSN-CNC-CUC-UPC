@@ -142,42 +142,67 @@ if __name__ == "__main__":
         print(totalLinks)
         print ("CONFIGURABLE LINKS ---------")
         print(configurableLinks)
-        for key in configurableLinks: #A partir del linkID, conseguir el nombre de los switch y las interficies que forman parte del link
-            linkID = int(key)
-            print("LINK ID-----")
-            print(linkID)
-            link = networkLinks[linkID] #link para el cual se ha generado una configuración
-            switchIP = 0
-            switchInterfaces = []
-            print(link)
-            for index,interfaces in linksInterfaces.items():
-                 if int(index) == linkID:
-                      print(interfaces)
-                      switchInterfaces = interfaces
-            #print(interfaces)
-            for switchID in link: #Para cada switch en el link, encontrar su nombre (ej: TSN_SWITCH_0) a partir de su ID
-                for index, ip in identificator.items(): 
-                     if int(index) == int(switchID):
-                          switchIP = ip #Encontrar su IP primero
-                          for element in switchesIDs:
-                               if switchIP in element: #Encontrar nombre del switch mediante la IP
-                                    switchConfName = element[1]
-                                    interface = switchInterfaces[int(link.index(switchID))]
-                                    per_link_payload = payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period,priority_mapping, Hyperperiod, interface)
-                                    #request= NETCONF_Device_configuration (per_link_payload[" "+str(key)], switchConfName, interface, switchIP) 
-                                    request= NETCONF_Device_configuration (per_link_payload[" "+str(key)], switchIP) #El indice de per_link_payload hace referencia al ID del link al que pertenece la interficie que se configura
-                                    print(switchConfName)
-                                    print(interface)
-                                    print("Link "+str(key))
-                                    print(str(per_link_payload[" "+str(key)]))
-                                    print(f"----------------RESPONSE TO REQUEST: {request}")
-                                    #streams = asyncio.run
+        for key in configurableLinks:
+          linkID = int(key)
+          print("LINK ID-----")
+          print(linkID)
+          
+          # Reconstruir el link desde el identificador lógico (linkID = 10 * src + dst)
+          src = linkID // 10
+          dst = linkID % 10
+          link = [src, dst]
+          switchIP = 0
+          switchInterfaces = []
+          print(link)
+         # Generar payloads para cada link_index
+          per_link_payload_raw = payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period, priority_mapping, Hyperperiod, None, networkLinks)
 
-                                    
-                                    
+          # Verificar claves devueltas
+          print("Raw payload keys:", per_link_payload_raw.keys())
 
-            
-        
+          # Mantener el payload generado
+          per_link_payload = per_link_payload_raw
+          
+          print("Final per_link_payload keys:", per_link_payload.keys())
+          print("Expected configurable links:", configurableLinks)
+
+          # Aplicar configuración por cada link
+          for key in configurableLinks:
+               linkID = int(key)
+               print("LINK ID-----")
+               print(linkID)
+               
+               src = linkID // 10
+               dst = linkID % 10
+               link = [src, dst]
+               switchIP = 0
+               switchInterfaces = []
+               print(link)
+
+          # Obtener interfaces del link
+          switchInterfaces = linksInterfaces[str(linkID)]
+
+          # Configurar ambos switches del link
+          for switchID in link:
+               for index, ip in identificator.items():
+                    if int(index) == switchID:
+                         switchIP = ip
+                         for element in switchesIDs:
+                              if switchIP in element:
+                                   switchConfName = element[1]
+                                   interface = switchInterfaces[link.index(switchID)]
+
+                                   # Mostrar info de depuración
+                                   print("Available keys in per_link_payload:", per_link_payload.keys())
+                                   print("Trying to access key:", str(linkID))
+
+                                   # Realizar configuración
+                                   request = NETCONF_Device_configuration(per_link_payload[str(linkID)], switchIP)
+                                   print(switchConfName)
+                                   print(interface)
+                                   print("Link " + str(linkID))
+                                   print(str(per_link_payload[str(linkID)]))
+                                   print(f"----------------RESPONSE TO REQUEST: {request}")
         
         #request= REST_Device_configuration (per_link_payload[" 0"], "TSN_SWITCH_1")
         #print(json.dumps(per_link_payload[" 0"]))

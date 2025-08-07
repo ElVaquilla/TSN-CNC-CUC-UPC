@@ -90,8 +90,11 @@ if __name__ == "__main__":
 
 
         """
+        # Detectar si se trata del algoritmo IACO
+        is_iaco = ilp_data.get("type", "ILP").upper() == "IACO"
+
         Clean_offsets = ilp_data["Clean_offsets"]
-        Repetitions_Descriptor = ilp_data["Repetitions_Descriptor"]
+        Repetitions_Descriptor = ilp_data["Repetitions_Descriptor", [[0, i] for i in range(len(Clean_offsets))]]
         Streams_Period = ilp_data["Streams_Period"]
         Hyperperiod =  ilp_data["Hyperperiod"]
         priority_mapping= {'0': '0', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '7'}
@@ -142,6 +145,7 @@ if __name__ == "__main__":
         print(totalLinks)
         print ("CONFIGURABLE LINKS ---------")
         print(configurableLinks)
+        
         for key in configurableLinks:
           linkID = int(key)
           print("LINK ID-----")

@@ -28,7 +28,7 @@ this is the list of input elements:
 'unused_links'
 '''
 # Variable para seleccionar algoritmo
-USE_IACO_ALGORITHM = False  # Cambiar a True para usar IACO
+USE_IACO_ALGORITHM = True # True para usar IACO False para usar ILP
 
 def restructuring_dictionary(dictionary):
     correct_keys = []

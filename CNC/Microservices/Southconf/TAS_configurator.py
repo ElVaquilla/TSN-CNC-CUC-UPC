@@ -109,147 +109,102 @@ Generates the payload defined in the 802.1 qcc schedule
 '''
 def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period, priority_mapping, hyperperiod, interface_port, Network_links):
 
-    grouped_offsets=gates_parameter_generator(Clean_offsets)
-    grouped_offsets=full_scheduler_generator(grouped_offsets, Repetitions_Descriptor, Streams_Period)
+     # 1) Construye estados por enlace
+    grouped_offsets = gates_parameter_generator(Clean_offsets)
+    grouped_offsets = full_scheduler_generator(grouped_offsets, Repetitions_Descriptor, Streams_Period)
     final_sorted_offsets = gates_states_values_generator(grouped_offsets, priority_mapping)
 
     per_link_payload = {}
+
+    # 2) Un XML por CADA link_id (OJO: 'link' ya es ID, p.ej. 1, 12, 3)
     for link, streams in final_sorted_offsets.items():
-        
-        admin_control_list = []
-        offsets_list = list(streams.keys())
-        print("Looking for the offsets_list don't you?", offsets_list)
-        offsets_index= 0
-        #to_define = "PORT_0"
+        try:
+            offsets_list = list(streams.keys())
+            print("Looking for the offsets_list don't you?", offsets_list)
+            offsets_index = 0
 
-        #############################XML BUILDING
-        #crear elemento config
-        config = etree.Element("config") #OLD -- NOT WORKING ANYMORE
-        # Crear el elemento raíz
-        root = etree.SubElement(config, "interfaces") #OLD -- NOT WORKING ANYMORE
-        #root = etree.Element("interfaces")
-        # Añadir el espacio de nombres
-        root.set("xmlns", "urn:ietf:params:xml:ns:yang:ietf-interfaces")
+            # Normaliza el nombre de interfaz: evita None
+            iface_name = interface_port if interface_port is not None else ""
 
-        #añadir campo interface
-        interface = etree.SubElement(root, "interface")
-        # Añadir el nombre de la interfaz
-        name = etree.SubElement(interface, "name")
-        name.text = interface_port
+            # -------- XML (igual que ya tenías) --------
+            config = etree.Element("config")
+            root = etree.SubElement(config, "interfaces")
+            root.set("xmlns", "urn:ietf:params:xml:ns:yang:ietf-interfaces")
 
-        # Añadir el tipo de interfaz
-        nsiana = "urn:ietf:params:xml:ns:yang:iana-if-type"
-        nsmapp = {'ianaift' : nsiana,}
-        type = etree.SubElement(interface, "type", nsmap=nsmapp)
-        type.text = "ianaift:ethernetCsmacd"
-        # Añadir el puerto del puente
-        bridge_port = etree.SubElement(interface, "bridge-port")
-        bridge_port.set("xmlns", "urn:ieee:std:802.1Q:yang:ieee802-dot1q-bridge")
+            interface = etree.SubElement(root, "interface")
+            name = etree.SubElement(interface, "name")
+            name.text = iface_name
 
-        # Añadir la tabla de parámetros de la puerta
-        gate_parameter_table = etree.SubElement(bridge_port, "gate-parameter-table")
-        gate_parameter_table.set("xmlns", "urn:ieee:std:802.1Q:yang:ieee802-dot1q-sched")
+            nsiana = "urn:ietf:params:xml:ns:yang:iana-if-type"
+            nsmapp = {"ianaift": nsiana}
+            if_type = etree.SubElement(interface, "type", nsmap=nsmapp)
+            if_type.text = "ianaift:ethernetCsmacd"
 
-        # Añadir la puerta habilitada
-        gate_enabled = etree.SubElement(gate_parameter_table, "gate-enabled")
-        gate_enabled.text = "true"
+            bridge_port = etree.SubElement(interface, "bridge-port")
+            bridge_port.set("xmlns", "urn:ieee:std:802.1Q:yang:ieee802-dot1q-bridge")
 
-        # Añadir los estados de la puerta de administración
-        admin_gate_states = etree.SubElement(gate_parameter_table, "admin-gate-states")
-        admin_gate_states.text = "255"
+            gate_parameter_table = etree.SubElement(bridge_port, "gate-parameter-table")
+            gate_parameter_table.set("xmlns", "urn:ieee:std:802.1Q:yang:ieee802-dot1q-sched")
 
-        # Añadir el máximo de la lista compatible
-        supported_list_max = etree.SubElement(gate_parameter_table, "supported-list-max")
-        supported_list_max.text = "90"
+            gate_enabled = etree.SubElement(gate_parameter_table, "gate-enabled")
+            gate_enabled.text = "true"
 
-        # Añadir el ciclo máximo compatible
-        supported_cycle_max = etree.SubElement(gate_parameter_table, "supported-cycle-max")
+            admin_gate_states = etree.SubElement(gate_parameter_table, "admin-gate-states")
+            admin_gate_states.text = "255"
 
-        # Añadir el numerador del ciclo máximo compatible
-        numerator = etree.SubElement(supported_cycle_max, "numerator")
-        numerator.text = "99999999"
+            supported_list_max = etree.SubElement(gate_parameter_table, "supported-list-max")
+            supported_list_max.text = "90"
 
-        # Añadir el denominador del ciclo máximo compatible
-        denominator = etree.SubElement(supported_cycle_max, "denominator")
-        denominator.text = "999999999"
+            supported_cycle_max = etree.SubElement(gate_parameter_table, "supported-cycle-max")
+            numerator = etree.SubElement(supported_cycle_max, "numerator")
+            numerator.text = "99999999"
+            denominator = etree.SubElement(supported_cycle_max, "denominator")
+            denominator.text = "999999999"
 
-        # Añadir el intervalo máximo compatible
-        supported_interval_max = etree.SubElement(gate_parameter_table, "supported-interval-max")
-        supported_interval_max.text = "999999999"
+            supported_interval_max = etree.SubElement(gate_parameter_table, "supported-interval-max")
+            supported_interval_max.text = "999999999"
 
-        # ADMIN CONTROL LIST
-        admin_control_list = etree.SubElement(gate_parameter_table, "admin-control-list")
+            admin_control_list = etree.SubElement(gate_parameter_table, "admin-control-list")
 
-        #admin cycle time
-        admin_cycle_time = etree.SubElement(gate_parameter_table, "admin-cycle-time")
+            admin_cycle_time = etree.SubElement(gate_parameter_table, "admin-cycle-time")
+            numerator = etree.SubElement(admin_cycle_time, "numerator")
+            numerator.text = "1"
+            denominator = etree.SubElement(admin_cycle_time, "denominator")
+            denominator.text = str(int(1000000 / hyperperiod))
 
-        # Añadir el numerador del ciclo máximo compatible
-        numerator = etree.SubElement(admin_cycle_time, "numerator")
-        numerator.text = "1"
+            admin_cycle_time_extension = etree.SubElement(gate_parameter_table, "admin-cycle-time-extension")
+            admin_cycle_time_extension.text = "0"
 
-        # Añadir el denominador del ciclo máximo compatible
-        denominator = etree.SubElement(admin_cycle_time, "denominator")
-        denominator.text = str(int(1000000/hyperperiod))
+            admin_base_time = etree.SubElement(gate_parameter_table, "admin-base-time")
+            seconds = etree.SubElement(admin_base_time, "seconds")
+            seconds.text = "0"
+            nanoseconds = etree.SubElement(admin_base_time, "nanoseconds")
+            nanoseconds.text = "0"
 
-        #admin cycle time extension
-        admin_cycle_time_extension = etree.SubElement(gate_parameter_table, "admin-cycle-time-extension")
-        admin_cycle_time_extension.text = "0"
-
-        #admin base time
-        admin_base_time = etree.SubElement(gate_parameter_table, "admin-base-time")
-        seconds = etree.SubElement(admin_base_time, "seconds")
-        seconds.text = "0"
-        nanoseconds = etree.SubElement(admin_base_time, "nanoseconds")
-        nanoseconds.text = "0"
-
-        #config change
-        config_change = etree.SubElement(gate_parameter_table, "config-change")
-        config_change.text = "true"
+            config_change = etree.SubElement(gate_parameter_table, "config-change")
+            config_change.text = "true"
 
 
+            # Entradas GCL (duraciones en ns, offsets en us → *1000)
+            for gate_state in streams.values():
+                try:
+                    time_interval_value = str(int(1000 * (offsets_list[offsets_index + 1] - offsets_list[offsets_index])))
+                except Exception:
+                    print("______________The mistake you are looking for _______________________")
+                    print(hyperperiod, " __ ", offsets_list[offsets_index])
+                    time_interval_value = str(int(1000 * (hyperperiod - offsets_list[offsets_index]) + 1000))
 
-        for gate_state in streams.values():
-            # Evaluate a offset with the next offset to get the total duration of the transmission
-            # Until this moment, all offsets and period values were in microseconds
-            try:
-                time_interval_value = str(int(1000*(offsets_list[offsets_index +1 ] - offsets_list[offsets_index])))
-            except:
-                print("______________The mistake you are looking for _______________________")
-                print(hyperperiod, " __ ", offsets_list[offsets_index])
-                time_interval_value = str(int(1000*(hyperperiod - offsets_list[offsets_index]) + 1000))
-            #sgs_params = {"gate-states-value": str(int(gate_state)),
+                gce = etree.SubElement(admin_control_list, "gate-control-entry")
+                idx = etree.SubElement(gce, "index")
+                idx.text = str(offsets_index)
+                op = etree.SubElement(gce, "operation-name")
+                op.text = "set-gate-states"
+                tiv = etree.SubElement(gce, "time-interval-value")
+                tiv.text = time_interval_value
+                gsv = etree.SubElement(gce, "gate-states-value")
+                gsv.text = str(int(gate_state))
 
-                         # "time-interval-value" :time_interval_value # Nanoseconds
-                     #   }
-            #################### ADMIN CONTROL LIST
-            # Añadir la entrada de control de puerta
-            gate_control_entry = etree.SubElement(admin_control_list, "gate-control-entry")
-
-            # Añadir el índice
-            index = etree.SubElement(gate_control_entry, "index")
-            index.text = str(offsets_index)
-
-            # Añadir el nombre de la operación
-            operation_name = etree.SubElement(gate_control_entry, "operation-name")
-            operation_name.text = "set-gate-states"
-
-            # Añadir el valor del intervalo de tiempo
-            timeintervalvalue = etree.SubElement(gate_control_entry, "time-interval-value")
-            timeintervalvalue.text = time_interval_value
-
-            # Añadir el valor de los estados de la puerta
-            gate_states_value = etree.SubElement(gate_control_entry, "gate-states-value")
-            gate_states_value.text = str(int(gate_state))
-            #admin_control_list.append(
-            #    {#sched-gate-control-entry
-             #       "index": str(offsets_index), #does not appear in 09-04-2021 revision
-              #      "operation-name": "set-gate-states", #yang checked
-                    #"sgs-params": sgs_params #does not appear in 09-04-2021 revision --> gate-states-value + time-interval-value
-               #     "gate-states-value": str(int(gate_state)),
-                #    "time-interval-value" :time_interval_value # Nanoseconds 
-                #}
-            #)
-            offsets_index = offsets_index + 1
+                offsets_index += 1
             '''
             per_link_payload[link] = {
                     "interface": {
@@ -286,28 +241,15 @@ def payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period, pri
         '''
 
 
-        # Convertir el elemento a una cadena XML
-        xml_string = etree.tostring(config, pretty_print=True, encoding="unicode")
+            # Convertir el elemento a una cadena XML
+            xml_string = etree.tostring(config, pretty_print=True, encoding="unicode")
+            per_link_payload[str(int(link))] = xml_string
+            print(f" Añadido linkID {link} al payload.")
 
-        # Intentar mapear usando el índice en Network_links
-        try:
-            # Si el 'link' es un entero (como 0, 1, 2...), lo usamos como índice
-            if isinstance(link, int) and 0 <= link < len(Network_links):
-                src, dst = Network_links[link]
-            else:
-                # Si no, lo ignoramos
-                print(f" El link '{link}' no es un índice válido de Network_links. Se ignora.")
-                continue
-
-            linkID = 10 * src + dst
-            per_link_payload[str(linkID)] = xml_string
-            print(f" Añadido linkID {linkID} al payload.")
         except Exception as e:
-            print(f" Error al mapear link '{link}': {e}")
-            continue
+            print(f"[payload_generator] Error construyendo payload para link {link}: {e}")
 
-
-
+    print("Raw payload keys:", per_link_payload.keys())
     return per_link_payload
 
 

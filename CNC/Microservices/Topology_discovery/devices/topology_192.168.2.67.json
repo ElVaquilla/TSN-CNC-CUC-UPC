@@ -10,9 +10,9 @@
 
           "via": "LLDP",
 
-          "rid": "3",
+          "rid": "18",
 
-          "age": "2 days, 02:20:10",
+          "age": "3 days, 02:35:05",
 
           "chassis": {
 
@@ -78,13 +78,13 @@
 
       {
 
-        "PORT_2": {
+        "PORT_1": {
 
           "via": "LLDP",
 
-          "rid": "4",
+          "rid": "19",
 
-          "age": "2 days, 02:20:10",
+          "age": "4 days, 05:10:46",
 
           "chassis": {
 
@@ -138,7 +138,7 @@
 
             },
 
-            "descr": "PORT_2",
+            "descr": "PORT_1",
 
             "ttl": "40"
 

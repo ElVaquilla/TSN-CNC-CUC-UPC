@@ -65,11 +65,11 @@
     "linksInterfaces": {
         "3": [
             "PORT_0",
-            "PORT_0"
+            "PORT_1"
         ],
         "1": [
-            "PORT_2",
-            "PORT_2"
+            "PORT_1",
+            "PORT_1"
         ],
         "12": [
             "PORT_0",

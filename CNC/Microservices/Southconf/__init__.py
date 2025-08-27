@@ -90,9 +90,6 @@ if __name__ == "__main__":
 
 
         """
-        # Detectar si se trata del algoritmo IACO
-        is_iaco = ilp_data.get("type", "ILP").upper() == "IACO"
-
         Clean_offsets = ilp_data["Clean_offsets"]
         Repetitions_Descriptor = ilp_data["Repetitions_Descriptor"]
         Streams_Period = ilp_data["Streams_Period"]
@@ -145,7 +142,6 @@ if __name__ == "__main__":
         print(totalLinks)
         print ("CONFIGURABLE LINKS ---------")
         print(configurableLinks)
-        
         for key in configurableLinks:
           linkID = int(key)
           print("LINK ID-----")
@@ -161,29 +157,12 @@ if __name__ == "__main__":
          # Generar payloads para cada link_index
           per_link_payload_raw = payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period, priority_mapping, Hyperperiod, None, networkLinks)
 
-          # Verificar claves devueltas
-          print("Raw payload keys:", per_link_payload_raw.keys())
-
           # Mantener el payload generado
           per_link_payload = per_link_payload_raw
           
           print("Final per_link_payload keys:", per_link_payload.keys())
           print("Expected configurable links:", configurableLinks)
 
-          # Aplicar configuración por cada link
-          for key in configurableLinks:
-               linkID = int(key)
-               print("LINK ID-----")
-               print(linkID)
-               
-               src = linkID // 10
-               dst = linkID % 10
-               link = [src, dst]
-               switchIP = 0
-               switchInterfaces = []
-               print(link)
-
-          # Obtener interfaces del link
           switchInterfaces = linksInterfaces[str(linkID)]
 
           # Configurar ambos switches del link
@@ -192,10 +171,10 @@ if __name__ == "__main__":
                     if int(index) == switchID:
                          switchIP = ip
                          for element in switchesIDs:
-                              if switchIP in element:
+                              if switchIP in element and switchIP.startswith("192.168.2"):
                                    switchConfName = element[1]
                                    interface = switchInterfaces[link.index(switchID)]
-
+                                   per_link_payload = payload_generator(Clean_offsets, Repetitions_Descriptor, Streams_Period, priority_mapping, Hyperperiod, interface, networkLinks)
                                    # Mostrar info de depuración
                                    print("Available keys in per_link_payload:", per_link_payload.keys())
                                    print("Trying to access key:", str(linkID))
